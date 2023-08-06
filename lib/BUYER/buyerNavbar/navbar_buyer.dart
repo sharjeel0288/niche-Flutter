@@ -1,11 +1,11 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:login_niche2/BUYER/buyerCatrgories/screen/ServiceDetailsScreen.dart';
 import 'package:login_niche2/BUYER/buyerHome/buyerhome.dart';
 import 'package:login_niche2/BUYER/buyerProfile/buyer_profile_screen.dart';
 import 'package:login_niche2/BUYER/buyerSearch/searchwidget.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 
-import '../buyerCatrgories/screen/SubCategorySevicesScreen.dart';
 
 class NavbarBuyer extends StatefulWidget {
   const NavbarBuyer({Key? key}) : super(key: key);
@@ -68,26 +68,26 @@ class _NavbarBuyerState extends State<NavbarBuyer> {
         },
         items: [
           FlashyTabBarItem(
-            icon: Icon(Icons.home_filled, color: Color(0xFF4F709C)),
-            title: Text(
+            icon: const Icon(Icons.home_filled, color: Color(0xFF4F709C)),
+            title: const Text(
               'Home',
               style: TextStyle(color: Color(0xFF323B60)),
             ),
           ),
           FlashyTabBarItem(
-            icon: Icon(Icons.search, color: Color(0xFF4F709C)),
-            title: Text('Search', style: TextStyle(color: Color(0xFF323B60))),
+            icon: const Icon(Icons.search, color: Color(0xFF4F709C)),
+            title: const Text('Search', style: TextStyle(color: Color(0xFF323B60))),
           ),
           FlashyTabBarItem(
-            icon: Icon(Icons.post_add, color: Color(0xFF4F709C)),
-            title: Text('Posts', style: TextStyle(color: Color(0xFF323B60))),
+            icon: const Icon(Icons.post_add, color: Color(0xFF4F709C)),
+            title: const Text('Posts', style: TextStyle(color: Color(0xFF323B60))),
           ),
           FlashyTabBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.shopping_cart,
               color: Color(0xFF4F709C),
             ),
-            title: Text(
+            title: const Text(
               'Cart',
               style: TextStyle(
                 color: Color(0xFF323B60),
@@ -95,11 +95,11 @@ class _NavbarBuyerState extends State<NavbarBuyer> {
             ),
           ),
           FlashyTabBarItem(
-            icon: Icon(
+            icon: const Icon(
               Icons.person,
               color: Color(0xFF4F709C),
             ),
-            title: Text(
+            title: const Text(
               "Profile",
               style: TextStyle(color: Color(0xFF323B60)),
             ),

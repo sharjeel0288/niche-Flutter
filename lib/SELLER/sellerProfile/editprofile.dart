@@ -1,9 +1,10 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:login_niche2/SELLER/sellerProfile/seller_profile.dart';
 import 'package:get/get.dart';
 
 class EditProfile extends StatefulWidget {

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api, avoid_print
+
 import 'package:login_niche2/BUYER/buyerCheckOut/model/buyerCheckOutModel.dart';
 import 'package:login_niche2/BUYER/buyerCheckOut/widget/StyledDivider.dart';
 import 'package:login_niche2/utils/flutterflow/flutter_flow_icon_button.dart';
@@ -7,8 +9,6 @@ import 'package:login_niche2/utils/flutterflow/flutter_flow_util.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:login_niche2/utils/flutterflow/flutter_flow_widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_avif/flutter_avif.dart';
 
 class CheckOutScreen extends StatefulWidget {
@@ -43,13 +43,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         alignment: Alignment.bottomCenter,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-          child: Container(
+          child: SizedBox(
             width: double.infinity, // Make it cover the full width
             child: FloatingActionButton.extended(
               onPressed: () {
                 print("Order Now button tapped!");
               },
-              label: Text(
+              label: const Text(
                 "Select Date and Time",
                 style: TextStyle(
                   fontSize: 16,
@@ -57,7 +57,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   color: Colors.white,
                 ),
               ),
-              icon: Icon(
+              icon: const Icon(
                 Icons.calendar_month,
                 color: Colors.white,
               ),
@@ -73,7 +73,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       key: scaffoldKey,
-      backgroundColor: Color(0xFFF1F4F8),
+      backgroundColor: const Color(0xFFF1F4F8),
       appBar: responsiveVisibility(
         context: context,
         desktop: false,
@@ -89,7 +89,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   borderColor: Colors.transparent,
                   borderRadius: 30,
                   buttonSize: 46,
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back_rounded,
                     color: Color(0xFF57636C),
                     size: 26,
@@ -98,7 +98,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     // context.pop();
                   },
                 ),
-                actions: [],
+                actions: const [],
                 centerTitle: false,
                 elevation: 0,
               ),
@@ -113,7 +113,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             checkOutServicePreview(context),
             offersAndPromoCode(context),
             orderSummary(context),
-            SizedBox(
+            const SizedBox(
               height: 40,
             )
           ],
@@ -125,16 +125,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   Flexible orderSummary(BuildContext context) {
     return Flexible(
       child: Padding(
-        padding: EdgeInsetsDirectional.all(5),
+        padding: const EdgeInsetsDirectional.all(5),
         child: Container(
           width: double.infinity,
           height: MediaQuery.sizeOf(context).height * 0.35,
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: double.infinity,
           ),
           decoration: BoxDecoration(
             color: Colors.white,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 blurRadius: 4,
                 color: Color(0x33000000),
@@ -144,7 +144,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -155,7 +155,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     'Order Summary',
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Outfit',
-                          color: Color(0xFF14181B),
+                          color: const Color(0xFF14181B),
                           fontSize: 22,
                           fontWeight: FontWeight.w500,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
@@ -168,7 +168,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     'Below is a list of your items.',
                     style: FlutterFlowTheme.of(context).labelMedium.override(
                           fontFamily: 'Plus Jakarta Sans',
-                          color: Color(0xFF57636C),
+                          color: const Color(0xFF57636C),
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
@@ -176,19 +176,19 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         ),
                   ),
                 ),
-                Divider(
+                const Divider(
                   height: 32,
                   thickness: 2,
                   color: Color(0xFFE0E3E7),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                     child: AutoSizeText(
                       'Price Breakdown',
                       style: FlutterFlowTheme.of(context).labelMedium.override(
                             fontFamily: 'DM Sans',
-                            color: Color(0xFF57636C),
+                            color: const Color(0xFF57636C),
                             fontSize: 14,
                             fontWeight: FontWeight.normal,
                             useGoogleFonts: GoogleFonts.asMap().containsKey(
@@ -204,14 +204,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     children: [
                       Flexible(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                          padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                           child: AutoSizeText(
                             'Base Price',
                             style: FlutterFlowTheme.of(context)
                                 .bodySmall
                                 .override(
                                   fontFamily: 'DM Sans',
-                                  color: Color(0xFF57636C),
+                                  color: const Color(0xFF57636C),
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
                                   useGoogleFonts: GoogleFonts.asMap()
@@ -229,7 +229,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               .bodyLarge
                               .override(
                                 fontFamily: 'DM Sans',
-                                color: Color(0xFF14181B),
+                                color: const Color(0xFF14181B),
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
@@ -248,14 +248,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     children: [
                       Flexible(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                          padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                           child: AutoSizeText(
                             'Coupon Discount',
                             style: FlutterFlowTheme.of(context)
                                 .bodySmall
                                 .override(
                                   fontFamily: 'DM Sans',
-                                  color: Color(0xFF57636C),
+                                  color: const Color(0xFF57636C),
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
                                   useGoogleFonts: GoogleFonts.asMap()
@@ -273,7 +273,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               .bodyLarge
                               .override(
                                 fontFamily: 'DM Sans',
-                                color: Color(0xFF178017),
+                                color: const Color(0xFF178017),
                                 fontSize: 16,
                                 fontWeight: FontWeight.normal,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
@@ -292,14 +292,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     children: [
                       Flexible(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                          padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                           child: AutoSizeText(
                             'Service Tax',
                             style: FlutterFlowTheme.of(context)
                                 .bodySmall
                                 .override(
                                   fontFamily: 'DM Sans',
-                                  color: Color(0xFF57636C),
+                                  color: const Color(0xFF57636C),
                                   fontSize: 14,
                                   fontWeight: FontWeight.normal,
                                   useGoogleFonts: GoogleFonts.asMap()
@@ -341,14 +341,14 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           children: [
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                                  const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                               child: AutoSizeText(
                                 'Total',
                                 style: FlutterFlowTheme.of(context)
                                     .titleMedium
                                     .override(
                                       fontFamily: 'DM Sans',
-                                      color: Color(0xFF57636C),
+                                      color: const Color(0xFF57636C),
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       useGoogleFonts: GoogleFonts.asMap()
@@ -368,7 +368,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               .displaySmall
                               .override(
                                 fontFamily: 'DM Sans',
-                                color: Color(0xFF14181B),
+                                color: const Color(0xFF14181B),
                                 fontSize: 28,
                                 fontWeight: FontWeight.w500,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
@@ -391,13 +391,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   Flexible offersAndPromoCode(BuildContext context) {
     return Flexible(
       child: Padding(
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Container(
           width: MediaQuery.sizeOf(context).width,
           height: MediaQuery.sizeOf(context).height * 0.08,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).secondaryBackground,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 blurRadius: 4,
                 color: Color(0x33000000),
@@ -407,7 +407,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             borderRadius: BorderRadius.circular(20), // Adding rounded border
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -421,7 +421,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     borderRadius:
                         BorderRadius.circular(10), // Adding rounded border
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.abc,
                       color: Color(0xFF323B60),
@@ -436,7 +436,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily:
                               FlutterFlowTheme.of(context).bodyMediumFamily,
-                          color: Color(0xFF323B60),
+                          color: const Color(0xFF323B60),
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
@@ -450,7 +450,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                           fontFamily:
                               FlutterFlowTheme.of(context).bodyMediumFamily,
-                          color: Color(0xFF323B60),
+                          color: const Color(0xFF323B60),
                           fontWeight: FontWeight.w500,
                           useGoogleFonts: GoogleFonts.asMap().containsKey(
                               FlutterFlowTheme.of(context).bodyMediumFamily),
@@ -465,7 +465,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     borderRadius:
                         BorderRadius.circular(10), // Adding rounded border
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Icon(
                       Icons.chevron_right,
                       color: Color(0xFF323B60),
@@ -483,13 +483,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
   Widget checkOutServicePreview(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(5.0),
       child: Container(
         width: double.infinity,
-        constraints: BoxConstraints(),
+        constraints: const BoxConstraints(),
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               blurRadius: 4,
               color: Color(0x33000000),
@@ -499,7 +499,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
+          padding: const EdgeInsetsDirectional.fromSTEB(12, 12, 12, 12),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -508,7 +508,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 'Checkout',
                 style: FlutterFlowTheme.of(context).titleLarge.override(
                       fontFamily: 'Outfit',
-                      color: Color(0xFF14181B),
+                      color: const Color(0xFF14181B),
                       fontSize: 28,
                       fontWeight: FontWeight.w500,
                       useGoogleFonts: GoogleFonts.asMap().containsKey(
@@ -519,7 +519,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: StyledDivider(
                   thickness: 2,
-                  color: Color(0x4857636C),
+                  color: const Color(0x4857636C),
                   dotSpacing: 2,
                 ),
               ),
@@ -534,7 +534,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
                         child: Container(
                           width: 80,
                           height: 105,
@@ -560,7 +560,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         children: [
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 20, 0, 5),
+                                const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 5),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -571,7 +571,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       .titleLarge
                                       .override(
                                         fontFamily: 'Outfit',
-                                        color: Color(0xFF14181B),
+                                        color: const Color(0xFF14181B),
                                         fontSize: 18,
                                         fontWeight: FontWeight.normal,
                                         useGoogleFonts: GoogleFonts.asMap()
@@ -581,7 +581,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       8, 0, 0, 0),
                                   child: AutoSizeText(
                                     '\$156.00',
@@ -590,7 +590,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                         .titleLarge
                                         .override(
                                           fontFamily: 'Outfit',
-                                          color: Color(0xFF14181B),
+                                          color: const Color(0xFF14181B),
                                           fontSize: 18,
                                           fontWeight: FontWeight.normal,
                                           useGoogleFonts: GoogleFonts.asMap()
@@ -605,7 +605,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -616,7 +616,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               ],
                             ),
                           ),
-                          Row(
+                          const Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

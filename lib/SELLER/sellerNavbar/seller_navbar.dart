@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:login_niche2/SELLER/SellerHome/seller_home_Screen.dart';
 import 'package:login_niche2/SELLER/sellerProfile/seller_profile.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
-import 'package:login_niche2/SELLER/sellerServices/add_service.dart';
 
 class NavbarSeller extends StatefulWidget {
   const NavbarSeller({Key? key}) : super(key: key);
@@ -17,7 +16,7 @@ class _NavbarSellerState extends State<NavbarSeller> {
   int _selectedIndex = 0;
   late PageController _pageController;
 
-  List<Widget> _tabItems = [
+  final List<Widget> _tabItems = [
     const SellerHome(),
     Container(),
     Container(),
