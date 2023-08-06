@@ -143,7 +143,7 @@ class _ServiceCardState extends State<ServiceCard>
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  "Active",
+                                  "Delete",
                                   style: GoogleFonts.dmSans(
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xFF323B60),
@@ -168,6 +168,7 @@ class _ServiceCardState extends State<ServiceCard>
                                 break;
                               case 2:
                                 if (widget.onDelete != null) {
+                                  //daba ka code dldo
                                   widget.onDelete!();
                                 }
                                 break;

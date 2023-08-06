@@ -461,7 +461,7 @@ class _SubCategorySevicesScreenState extends State<SubCategorySevicesScreen> {
                           child: ServiceCard(
                             title: 'Woodland Salon',
                             description: 'Lorem epsom',
-                            img: 'assets/niche.png',
+                            img:'assets/barber.avif',
                             price: '49',
                             ratings: '4.9',
                             time: '2.15',

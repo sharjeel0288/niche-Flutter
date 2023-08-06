@@ -177,43 +177,47 @@ class _SellerHomeState extends State<SellerHome> {
                                 color: Color(0xFF213555),
                               ),
                             ),
-                          Row(
-
-                            children: [
-                              GestureDetector(
-                              onTap: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(
-                builder: (context) => AddService()),
-                );
-                },
-                  child: const Text(
-                    'Add a Service',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF4F709C),
-                    ),
-                  ),
-                ),SizedBox(width: Get.width*0.04,),
-                             GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Services()),
-                              );
-                            },
-                            child: const Text(
-                              'View All',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF4F709C),
-                              ),
-                            ),
-                          )],)
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AddService()),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'Add a Service',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFF4F709C),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: Get.width * 0.04,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Services()),
+                                    );
+                                  },
+                                  child: const Text(
+                                    'View All',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFF4F709C),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
                           ],
                         ),
                       ),
@@ -232,12 +236,17 @@ class _SellerHomeState extends State<SellerHome> {
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       ServiceCard(
-                          serviceName: 'Sofa Cleaning',
-                          serviceRatings: 4.1,
-                          serviceTime: '30 mins',
-                          servicePrice: 79.99,
-                          serviceImage:
-                              "https://img.freepik.com/premium-photo/dry-cleaner-s-employee-removing-dirt-from-furniture-flat-closeup_152904-2670.jpg?w=740"),
+                        serviceName: 'Sofa Cleaning',
+                        serviceRatings: 4.1,
+                        serviceTime: '30 mins',
+                        servicePrice: 79.99,
+                        serviceImage:
+                            "https://img.freepik.com/premium-photo/dry-cleaner-s-employee-removing-dirt-from-furniture-flat-closeup_152904-2670.jpg?w=740",
+                        onDelete: () {
+                          print("assg");
+                        },
+                        onEdit: (){print('edit');},
+                      ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),

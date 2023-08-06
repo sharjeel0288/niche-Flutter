@@ -2,6 +2,7 @@
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_avif/flutter_avif.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_niche2/utils/flutterflow/flutter_flow_theme.dart';
 import 'package:login_niche2/utils/flutterflow/flutter_flow_widgets.dart';
@@ -53,9 +54,9 @@ class ServiceCard extends StatelessWidget {
                         color: FlutterFlowTheme.of(context).secondaryBackground,
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: Image.asset(
-                            img,
-                          ).image,
+                          image: AvifImage.asset(
+                    img,
+                  ).image,
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
