@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_niche2/BUYER/buyerCheckOut/screen/buyerCheckOutScreen.dart';
+import 'package:login_niche2/BUYER/buyerNavbar/navbar_buyer.dart';
+import 'package:login_niche2/SELLER/sellerNavbar/seller_navbar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +25,6 @@ class _MyAppState extends State<MyApp> {
   // ];
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: CheckOutScreen());
+    return const MaterialApp(home: NavbarBuyer());
   }
 }
