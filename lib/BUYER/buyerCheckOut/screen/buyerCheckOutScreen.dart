@@ -369,7 +369,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               .override(
                                 fontFamily: 'DM Sans',
                                 color: const Color(0xFF14181B),
-                                fontSize: 28,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w500,
                                 useGoogleFonts: GoogleFonts.asMap().containsKey(
                                     FlutterFlowTheme.of(context)
@@ -423,7 +423,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                   ),
                   child: const Center(
                     child: Icon(
-                      Icons.abc,
+                      Icons.local_offer,
                       color: Color(0xFF323B60),
                       size: 24,
                     ),
