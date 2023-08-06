@@ -3,11 +3,8 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-<<<<<<< HEAD
   file_selector_windows
   flutter_avif_windows
-=======
->>>>>>> 6dd31516f54774b3a9dec0c727c02856237f3253
   url_launcher_windows
 )
 

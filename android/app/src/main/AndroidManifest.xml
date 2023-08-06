@@ -23,10 +23,6 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-<<<<<<< HEAD
-
-=======
->>>>>>> 6dd31516f54774b3a9dec0c727c02856237f3253
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
