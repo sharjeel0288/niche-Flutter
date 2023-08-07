@@ -25,6 +25,10 @@ class _MyAppState extends State<MyApp> {
   // ];
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return const MaterialApp(home: NavbarSeller());
+=======
+    return const MaterialApp(home: NavbarBuyer());
+>>>>>>> a1819c59cf5c96b86cb4e8d6f0be9e49c0b697b5
   }
 }
