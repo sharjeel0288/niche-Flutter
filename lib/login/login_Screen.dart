@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages, file_names, library_private_types_in_public_api
 
-import 'package:login_niche2/API/authAPI.dart';
+import 'package:login_niche2/API/API.dart';
 import 'package:login_niche2/BUYER/buyerNavbar/navbar_buyer.dart';
 import 'package:login_niche2/SELLER/sellerNavbar/seller_navbar.dart';
 import 'package:login_niche2/login/forget_password.dart';
@@ -11,7 +11,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:login_niche2/signup/signup.dart';
 import 'package:http/http.dart' as http;
+import 'package:login_niche2/utils/helperFunctions.dart';
 import 'package:login_niche2/verification/verification_Screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_model.dart';
 export 'login_model.dart';
@@ -62,33 +64,6 @@ class _LoginScreenState extends State<LoginScreen> {
         .hasMatch(email);
   }
 
-  void showSnackBar(BuildContext context, String message) {
-    final snackBar = SnackBar(
-      behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.black87,
-      elevation: 0,
-      content: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Text(
-          message,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      duration: const Duration(seconds: 2),
-    );
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      snackBar,
-    );
-  }
-
   bool isAllFieldsValid(BuildContext context) {
     String email = _model.emailAddressController.text;
     String password = _model.passwordController.text;
@@ -109,101 +84,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return true;
-  }
-
-  Future<void> login(BuildContext context) async {
-    try {
-      String email = _model.emailAddressController.text;
-      String password = _model.passwordController.text;
-
-      final url = Uri.parse(api.loginURL);
-      final headers = {'Content-Type': 'application/json'};
-      final body = jsonEncode({'email': email, 'password': password});
-      print("ajkbakjf");
-      final response = await http.post(url, headers: headers, body: body);
-      print("ajkbakjf");
-
-      print(response.statusCode);
-      if (response.statusCode == 200) {
-        final responseData = jsonDecode(response.body);
-        print(response.body);
-
-        if (responseData['message'] == "User not found") {
-          showSnackBar(context, 'Invalid password/Email');
-          return;
-        } else if (responseData['message'] == 'Account not verified') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => VerificationScreen(
-                email: email,
-              ),
-            ),
-          );
-        } else if (responseData['role'] == 'buyer') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const NavbarBuyer()),
-          );
-        } else if (responseData['role'] == 'seller') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => NavbarSeller()),
-          );
-        }
-      } else {
-        throw Exception('Failed to login');
-      }
-    } catch (error) {
-      const errorMessage = 'An error occurred while logging in.';
-      showDialog(
-        context: context,
-        builder: (context) => Theme(
-          data: Theme.of(context).copyWith(
-            dialogBackgroundColor: const Color.fromARGB(255, 218, 212, 207),
-          ),
-          child: AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            title: const Text(
-              'Login Failed',
-              style: TextStyle(
-                color: Color.fromRGBO(33, 53, 85, 1.0),
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            content: const Text(
-              errorMessage,
-              style: TextStyle(
-                color: Color.fromRGBO(33, 53, 85, 1.0),
-                fontSize: 16,
-              ),
-            ),
-            actions: [
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color.fromRGBO(33, 53, 85, 1.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: const Text(
-                  'OK',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
   }
 
   @override
@@ -514,9 +394,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 70),
                           child: FFButtonWidget(
                             onPressed: () async {
-                           
                               if (isAllFieldsValid(context)) {
-                                await login(context);
+                                await API().login(
+                                    context,
+                                    _model.emailAddressController.text,
+                                    _model.passwordController.text);
                               }
                             },
                             text: 'Login',

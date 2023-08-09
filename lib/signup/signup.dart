@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:login_niche2/API/authAPI.dart';
+import 'package:login_niche2/API/API.dart';
 import 'package:login_niche2/login/login_Screen.dart';
 import 'package:login_niche2/signup/widgets/labelTextField.dart';
 import 'package:login_niche2/verification/verification_Screen.dart';
@@ -159,18 +159,18 @@ class _SignupState extends State<Signup> {
       final userPhoneText = userPhone.text;
 print('agya m');
       final body = jsonEncode({
+        'first_name': firstNameText,
+        'last_name': lastNameText,
         'username': usernameText,
         'email': emailText,
         'password': passwordText,
-        'firstName': firstNameText,
-        'lastName': lastNameText,
         'role': roleValue,
-        'userAddress': userAddressText,
-        'userCity': userCityText,
+        'user_address': userAddressText,
+        'user_city': userCityText,
         'user_state': userStateText,
-        'userCountry': 'Canada',
-        'userZipcode': userZipcodeText,
-        'userPhone': userPhoneText,
+        'user_country': 'Canada',
+        'user_zipcode': userZipcodeText,
+        'user_phone': userPhoneText,
       });
 
       final headers = {'Content-Type': 'application/json'};

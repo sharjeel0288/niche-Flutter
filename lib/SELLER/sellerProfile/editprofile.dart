@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unused_field, unused_local_variable, prefer_typing_uninitialized_variables, unused_element
 
 import 'dart:io';
 
@@ -61,7 +61,7 @@ class _EditProfileState extends State<EditProfile> {
         // decoration: BoxDecoration(border:Border.all(color: Colors.red,width: 3),borderRadius: BorderRadius.circular(8)),
         height: h * 0.2,
         width: w * 0.7,
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
             Text(
@@ -69,7 +69,7 @@ class _EditProfileState extends State<EditProfile> {
               style: GoogleFonts.dmSans(
                   fontSize: fontSize,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF323B60),
+                  color: const Color(0xFF323B60),
                   decoration: TextDecoration.none),
             ),
             SizedBox(
@@ -85,11 +85,11 @@ class _EditProfileState extends State<EditProfile> {
                       onPressed: () {
                         getImage(ImageSource.camera);
                       },
-                      icon: Icon(Icons.camera_alt),
+                      icon: const Icon(Icons.camera_alt),
                       tooltip: "Camera",
                       iconSize: h * 0.04 + w * 0.04,
                     ),
-                    Text("Camera")
+                    const Text("Camera")
                   ],
                 ),
                 Column(
@@ -98,11 +98,11 @@ class _EditProfileState extends State<EditProfile> {
                       onPressed: () {
                         getImage(ImageSource.gallery);
                       },
-                      icon: Icon(Icons.image),
+                      icon: const Icon(Icons.image),
                       tooltip: "Gallery",
                       iconSize: h * 0.04 + w * 0.04,
                     ),
-                    Text("Gallery")
+                    const Text("Gallery")
                   ],
                 )
               ],
@@ -174,7 +174,7 @@ class _EditProfileState extends State<EditProfile> {
                     style: GoogleFonts.dmSans(
                         fontSize: fontSize,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF323B60),
+                        color: const Color(0xFF323B60),
                         decoration: TextDecoration.none),
                   ),
                   IconButton(
@@ -211,14 +211,14 @@ class _EditProfileState extends State<EditProfile> {
                               child: CircleAvatar(
                                   radius: h * 0.015 + w * 0.015,
                                   child: IconButton(
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.linked_camera_outlined,
                                       color: Colors.white,
                                       weight: 100,
                                     ),
                                     onPressed: () {
                                       showModalBottomSheet(
-                                          backgroundColor: Color(0xFFCEB290),
+                                          backgroundColor: const Color(0xFFCEB290),
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(30)),
@@ -232,7 +232,7 @@ class _EditProfileState extends State<EditProfile> {
                       : CircleAvatar(
                           radius: h * 0.045 + w * 0.045,
                           // backgroundColor: Colors.red,
-                          backgroundImage: AssetImage("assets/peter.jpeg"),
+                          backgroundImage: const AssetImage("assets/peter.jpeg"),
                           child: Align(
                             alignment: Alignment.bottomRight,
                             child: CircleAvatar(
@@ -241,14 +241,14 @@ class _EditProfileState extends State<EditProfile> {
                               child: CircleAvatar(
                                   radius: h * 0.015 + w * 0.015,
                                   child: IconButton(
-                                    icon: Icon(
+                                    icon: const Icon(
                                       Icons.linked_camera_outlined,
                                       color: Colors.white,
                                       weight: 100,
                                     ),
                                     onPressed: () {
                                       showModalBottomSheet(
-                                          backgroundColor: Color(0xFFCEB290),
+                                          backgroundColor: const Color(0xFFCEB290),
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(30)),
@@ -265,15 +265,15 @@ class _EditProfileState extends State<EditProfile> {
                 Container(
                   width: w * 0.9,
                   height: h * 0.07,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                  padding: const EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4F709C), width: 1),
+                    border: Border.all(color: const Color(0xFF4F709C), width: 1),
                     borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.rectangle,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(right: 3, top: 3, left: 25),
+                    padding: const EdgeInsets.only(right: 3, top: 3, left: 25),
                     child: TextField(
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -281,9 +281,9 @@ class _EditProfileState extends State<EditProfile> {
                             hintStyle: GoogleFonts.workSans(
                                 fontSize: fonte,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xFF4F709C),
+                                color: const Color(0xFF4F709C),
                                 decoration: TextDecoration.none),
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.person_outline,
                               size: 25,
                               color: Color(0xFF4F709C),
@@ -294,14 +294,14 @@ class _EditProfileState extends State<EditProfile> {
                   left: 35,
                   top: 12,
                   child: Container(
-                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                    padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
                     color: Colors.white,
                     child: Text(
                       'Full Name',
                       style: GoogleFonts.workSans(
                           fontSize: fonte,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF4F709C),
+                          color: const Color(0xFF4F709C),
                           decoration: TextDecoration.none),
                     ),
                   ),
@@ -313,15 +313,15 @@ class _EditProfileState extends State<EditProfile> {
                 Container(
                   width: w * 0.9,
                   height: h * 0.07,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                  padding: const EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4F709C), width: 1),
+                    border: Border.all(color: const Color(0xFF4F709C), width: 1),
                     borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.rectangle,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(right: 3, top: 3, left: 25),
+                    padding: const EdgeInsets.only(right: 3, top: 3, left: 25),
                     child: TextField(
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -329,9 +329,9 @@ class _EditProfileState extends State<EditProfile> {
                             hintStyle: GoogleFonts.workSans(
                                 fontSize: fonte,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xFF4F709C),
+                                color: const Color(0xFF4F709C),
                                 decoration: TextDecoration.none),
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.person_outline,
                               size: 25,
                               color: Color(0xFF4F709C),
@@ -342,14 +342,14 @@ class _EditProfileState extends State<EditProfile> {
                   left: 35,
                   top: 12,
                   child: Container(
-                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                    padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
                     color: Colors.white,
                     child: Text(
                       'User Name',
                       style: GoogleFonts.workSans(
                           fontSize: fonte,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF4F709C),
+                          color: const Color(0xFF4F709C),
                           decoration: TextDecoration.none),
                     ),
                   ),
@@ -361,15 +361,15 @@ class _EditProfileState extends State<EditProfile> {
                 Container(
                   width: w * 0.9,
                   height: h * 0.07,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                  padding: const EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4F709C), width: 1),
+                    border: Border.all(color: const Color(0xFF4F709C), width: 1),
                     borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.rectangle,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(right: 3, top: 3, left: 25),
+                    padding: const EdgeInsets.only(right: 3, top: 3, left: 25),
                     child: TextField(
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
@@ -379,9 +379,9 @@ class _EditProfileState extends State<EditProfile> {
                             hintStyle: GoogleFonts.workSans(
                                 fontSize: fonte,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xFF4F709C),
+                                color: const Color(0xFF4F709C),
                                 decoration: TextDecoration.none),
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.email_outlined,
                               size: 25,
                               color: Color(0xFF4F709C),
@@ -392,14 +392,14 @@ class _EditProfileState extends State<EditProfile> {
                   left: 35,
                   top: 12,
                   child: Container(
-                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                    padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
                     color: Colors.white,
                     child: Text(
                       'Email',
                       style: GoogleFonts.workSans(
                           fontSize: fonte,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF4F709C),
+                          color: const Color(0xFF4F709C),
                           decoration: TextDecoration.none),
                     ),
                   ),
@@ -411,15 +411,15 @@ class _EditProfileState extends State<EditProfile> {
                 Container(
                   width: w * 0.9,
                   height: h * 0.07,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: EdgeInsets.only(bottom: 10),
+                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                  padding: const EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4F709C), width: 1),
+                    border: Border.all(color: const Color(0xFF4F709C), width: 1),
                     borderRadius: BorderRadius.circular(10),
                     shape: BoxShape.rectangle,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(right: 3, top: 3, left: 25),
+                    padding: const EdgeInsets.only(right: 3, top: 3, left: 25),
                     child: TextField(
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -427,9 +427,9 @@ class _EditProfileState extends State<EditProfile> {
                             hintStyle: GoogleFonts.workSans(
                                 fontSize: fonte,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xFF4F709C),
+                                color: const Color(0xFF4F709C),
                                 decoration: TextDecoration.none),
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.password,
                               size: 25,
                               color: Color(0xFF4F709C),
@@ -440,14 +440,14 @@ class _EditProfileState extends State<EditProfile> {
                   left: 35,
                   top: 12,
                   child: Container(
-                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                    padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
                     color: Colors.white,
                     child: Text(
                       'Password',
                       style: GoogleFonts.workSans(
                           fontSize: fonte,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF4F709C),
+                          color: const Color(0xFF4F709C),
                           decoration: TextDecoration.none),
                     ),
                   ),

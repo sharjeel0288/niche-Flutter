@@ -2,7 +2,7 @@
 
 import 'dart:async';
 
-import 'package:login_niche2/API/authAPI.dart';
+import 'package:login_niche2/API/API.dart';
 import 'package:login_niche2/login/login_Screen.dart';
 import 'package:login_niche2/utils/flutterflow/flutter_flow_theme.dart';
 import 'package:login_niche2/utils/flutterflow/flutter_flow_util.dart';

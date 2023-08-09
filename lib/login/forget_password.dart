@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:login_niche2/API/authAPI.dart';
+import 'package:login_niche2/API/API.dart';
 import 'package:login_niche2/signup/signup.dart';
 import 'package:http/http.dart' as http;
 import 'package:login_niche2/utils/flutterflow/flutter_flow_theme.dart';

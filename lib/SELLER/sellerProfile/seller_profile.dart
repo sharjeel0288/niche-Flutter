@@ -1,8 +1,6 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, avoid_print
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:login_niche2/SELLER/sellerNavbar/seller_navbar.dart';
@@ -95,7 +93,7 @@ class _Seller_ProfileState extends State<Seller_Profile> {
           Container(
             height: height1,
             width: w * 1,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -117,13 +115,13 @@ class _Seller_ProfileState extends State<Seller_Profile> {
                     child: CircleAvatar(
                       radius: h * 0.037 + w * 0.037,
                       // backgroundColor: Colors.red,
-                      backgroundImage: AssetImage('assets/peter.jpeg'),
+                      backgroundImage: const AssetImage('assets/peter.jpeg'),
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: CircleAvatar(
                           radius: h * 0.016 + w * 0.016,
                           child: IconButton(
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.edit_sharp,
                               color: Colors.black,
                               weight: 10,
@@ -160,7 +158,7 @@ class _Seller_ProfileState extends State<Seller_Profile> {
                     ),
                   ),
                   SizedBox(height: h * 0.02),
-                  Container(
+                  SizedBox(
                     width: w * 0.855,
                     height: h * 0.15,
                     child: Material(
@@ -199,7 +197,7 @@ class _Seller_ProfileState extends State<Seller_Profile> {
                               ],
                             ),
                           ),
-                          Divider(
+                          const Divider(
                             color: Colors.white, // Divider color is white
                           ),
                           Padding(
@@ -277,7 +275,7 @@ class _Seller_ProfileState extends State<Seller_Profile> {
                             style: GoogleFonts.workSans(
                               fontSize: fonte,
                               fontWeight: FontWeight.w600,
-                              color: Color(0xFF4F709C),
+                              color: const Color(0xFF4F709C),
                               decoration: TextDecoration.none,
                             ),
                           ),
