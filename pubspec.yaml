@@ -71,7 +71,7 @@ dependencies:
   styled_divider: ^1.0.5
   flutter_avif: ^1.3.0
   flutter_svg: ^2.0.7
-
+  flutter_sticky_header: ^0.6.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
