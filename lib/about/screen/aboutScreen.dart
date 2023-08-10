@@ -1,7 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:login_niche2/about/widget/customCard.dart';
-
-
 
 class AboutScreen extends StatelessWidget {
   final List<String> sectionTitles = [
@@ -47,7 +47,6 @@ class AboutScreen extends StatelessWidget {
               fontSize: 24.0,
             ),
           ),
-          // centerTitle: true,
         ),
         body: SingleChildScrollView(
             child: Column(
@@ -58,24 +57,56 @@ class AboutScreen extends StatelessWidget {
             //     fit: BoxFit.cover,
             //   ),
             // ),
-            CustomCard(
-              title: sectionTitles[0],
-              description: sectionDescriptions[0],
-              imageUrl: imageUrls[0],
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: CustomCard(
+            //     title: sectionTitles[0],
+            //     description: sectionDescriptions[0],
+            //     imageUrl: imageUrls[0],
+            //   ),
+            // ),
+            RequestCard(title: sectionTitles[0], desc: sectionDescriptions[0]),
+            HowItWorksScreen(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InteractiveCardList(),
+            ),
+            RequestCard(
+                title: "Tell Us What You Need",
+                desc:
+                    "Initiating looking for a professional and not sure where to start? Tell us about your project and we'll send you a list of Health & Wellness professionals to review. There's no pressure to hire, so you can compare profiles, read previous reviews and ask for more information before you make your decision. Best of all - it's completely free!"),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomCard(
+                title: sectionTitles[1],
+                description: sectionDescriptions[1],
+                imageUrl: imageUrls[1],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomCard(
+                title: sectionTitles[2],
+                description: sectionDescriptions[2],
+                imageUrl: imageUrls[2],
+              ),
+            ),
+            // Line Separator
+            Divider(
+              height: 30.0,
+              color: Colors.black,
             ),
 
-            HowItWorksScreen(),
-            InteractiveCardList(),
-            RequestCard(),
-            CustomCard(
-              title: sectionTitles[1],
-              description: sectionDescriptions[1],
-              imageUrl: imageUrls[1],
-            ),
-            CustomCard(
-              title: sectionTitles[2],
-              description: sectionDescriptions[2],
-              imageUrl: imageUrls[2],
+            // Copyright Text
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "© Butterpply",
+                style: TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.grey,
+                ),
+              ),
             ),
           ],
         )),
@@ -171,23 +202,21 @@ class _InteractiveCardListState extends State<InteractiveCardList> {
       children: [
         SizedBox(
           height: 240.0,
-          child: ListView.builder(
+          child: PageView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: categories.length,
+            onPageChanged: (index) {
+              setState(() {
+                selectedCategoryIndex = index;
+              });
+            },
             itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedCategoryIndex = index;
-                  });
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  child: CustomCard(
-                    title: categories[index]['title'],
-                    description: categories[index]['description'],
-                    imageUrl: categories[index]['imageUrl'],
-                  ),
+              return Container(
+                width: MediaQuery.of(context).size.width * 0.95,
+                child: CustomCard(
+                  title: categories[index]['title'],
+                  description: categories[index]['description'],
+                  imageUrl: categories[index]['imageUrl'],
                 ),
               );
             },
@@ -202,43 +231,26 @@ class _InteractiveCardListState extends State<InteractiveCardList> {
               ),
           ],
         ),
-      ],
-    );
-  }
-}
-
-
-
-class HowItWorksStep extends StatelessWidget {
-  final String text;
-  final IconData icon;
-
-  HowItWorksStep({required this.text, required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: 30,
-          alignment: Alignment.topCenter,
-          child: Icon(
-            icon,
-            color: Colors.blue,
-            size: 20,
-          ),
+        SizedBox(
+          height: 10,
         ),
-        SizedBox(width: 12.0),
-        Expanded(
-          child: Text(
-            text,
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.white,
-              fontSize: 16.0,
-            ),
-          ),
+        // Indicator circles
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: categories.map((category) {
+            int index = categories.indexOf(category);
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 2.0),
+              width: 8.0,
+              height: 8.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: selectedCategoryIndex == index
+                    ? Colors.blueAccent
+                    : Colors.grey,
+              ),
+            );
+          }).toList(),
         ),
       ],
     );
@@ -264,15 +276,16 @@ class HowItWorksScreen extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        // borderRadius: BorderRadius.circular(10.0),
         image: DecorationImage(
           image: NetworkImage(
-              'https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=579&q=80'),
-          fit: BoxFit.cover, // Scale the image to cover the container
+            'https://images.unsplash.com/photo-1574169208507-84376144848b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=579&q=80',
+          ),
+          fit: BoxFit.cover,
         ),
       ),
       child: Container(
         padding: EdgeInsets.all(16.0),
+        color: Colors.black.withOpacity(0.6),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -298,23 +311,24 @@ class HowItWorksScreen extends StatelessWidget {
                           fontFamily: 'Montserrat',
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 255, 255, 255),
+                          color: Colors.white,
                         ),
                       ),
                       SizedBox(height: 12.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: sellerSteps
-                            .map((step) => HowItWorksStep(
-                                  text: step,
-                                  icon: Icons.check_circle,
-                                ))
-                            .toList(),
+                        children: [
+                          for (final step in sellerSteps)
+                            HowItWorksStep(
+                              text: step,
+                              icon: Icons.check_circle,
+                            ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-                SizedBox(width: 24.0), // Add spacing between columns
+                SizedBox(width: 24.0),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -325,18 +339,19 @@ class HowItWorksScreen extends StatelessWidget {
                           fontFamily: 'Montserrat',
                           fontSize: 20.0,
                           fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 255, 255, 255),
+                          color: Colors.white,
                         ),
                       ),
                       SizedBox(height: 12.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: buyerSteps
-                            .map((step) => HowItWorksStep(
-                                  text: step,
-                                  icon: Icons.check_circle,
-                                ))
-                            .toList(),
+                        children: [
+                          for (final step in buyerSteps)
+                            HowItWorksStep(
+                              text: step,
+                              icon: Icons.check_circle,
+                            ),
+                        ],
                       ),
                     ],
                   ),
@@ -349,11 +364,49 @@ class HowItWorksScreen extends StatelessWidget {
     );
   }
 }
+
+class HowItWorksStep extends StatelessWidget {
+  final String text;
+  final IconData icon;
+
+  HowItWorksStep({required this.text, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(
+          icon,
+          color: Colors.blue,
+          size: 20,
+        ),
+        SizedBox(width: 12.0),
+        Expanded(
+          child: Text(
+            text,
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              color: Colors.white,
+              fontSize: 16.0,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class RequestCard extends StatelessWidget {
+  String title, desc;
+  RequestCard({
+    required this.title,
+    required this.desc,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(16.0),
+      margin: EdgeInsets.all(8.0),
       padding: EdgeInsets.all(20.0),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -371,7 +424,7 @@ class RequestCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Tell Us What You Need",
+            title,
             style: TextStyle(
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
@@ -380,7 +433,7 @@ class RequestCard extends StatelessWidget {
           ),
           SizedBox(height: 12.0),
           Text(
-            "Initiating looking for a professional and not sure where to start? Tell us about your project and we'll send you a list of Health & Wellness professionals to review. There's no pressure to hire, so you can compare profiles, read previous reviews and ask for more information before you make your decision. Best of all - it's completely free!",
+            desc,
             style: TextStyle(
               fontSize: 16.0,
               color: Colors.grey[700],

@@ -12,15 +12,17 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        // borderRadius: BorderRadius.circular(10.0),
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover, // Scale the image to cover the container
-        ),
-      ),
+     decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(10.0),
+    image: imageUrl.isNotEmpty
+        ? DecorationImage(
+            image: NetworkImage(imageUrl),
+            fit: BoxFit.cover,
+          )
+        : null,
+  ),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(8.0),
         child: Container(
           padding: EdgeInsets.all(16.0),
           decoration: BoxDecoration(

@@ -77,21 +77,21 @@ class _MyAppState extends State<MyApp> {
       // Your navigation logic remains the same
       return MaterialApp(
         home: Scaffold(
-          // body: AboutScreen(),
-          body: route == 'buyer'
-              ? const NavbarBuyer()
-              : route == 'seller'
-                  ? const NavbarSeller()
-                  : route == 'login'
-                      ? const LoginScreen()
-                      : Center(
-                          child: LoadingAnimationWidget.discreteCircle(
-                            color: Colors.blueAccent,
-                            size: screenWidth * 0.34,
-                            secondRingColor: Colors.brown.shade400,
-                            thirdRingColor: Colors.purple,
-                          ),
-                        ),
+          body: AboutScreen(),
+          // body: route == 'buyer'
+          //     ? const NavbarBuyer()
+          //     : route == 'seller'
+          //         ? const NavbarSeller()
+          //         : route == 'login'
+          //             ? const LoginScreen()
+          //             : Center(
+          //                 child: LoadingAnimationWidget.discreteCircle(
+          //                   color: Colors.blueAccent,
+          //                   size: screenWidth * 0.34,
+          //                   secondRingColor: Colors.brown.shade400,
+          //                   thirdRingColor: Colors.purple,
+          //                 ),
+          //               ),
         ),
       );
     }
