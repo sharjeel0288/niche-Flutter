@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:login_niche2/BUYER/buyerCatrgories/model/ServiceDetailModel.dart';
 import 'package:login_niche2/BUYER/buyerCatrgories/widgets/ReviewCard.dart';
@@ -43,13 +45,13 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
         alignment: Alignment.bottomCenter,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
-          child: Container(
+          child: SizedBox(
             width: double.infinity, // Make it cover the full width
             child: FloatingActionButton.extended(
               onPressed: () {
                 print("Order Now button tapped!");
               },
-              label: Text(
+              label: const Text(
                 "Order Now",
                 style: TextStyle(
                   fontSize: 16,
@@ -57,7 +59,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   color: Colors.white,
                 ),
               ),
-              icon: Icon(
+              icon: const Icon(
                 Icons.shopping_cart,
                 color: Colors.white,
               ),
@@ -95,9 +97,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                 child: Stack(
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(-1, -1),
+                      alignment: const AlignmentDirectional(-1, -1),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 15, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(15, 15, 0, 0),
                         child: Icon(
                           Icons.arrow_back_rounded,
                           color: FlutterFlowTheme.of(context).primaryBackground,
@@ -106,9 +108,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(-0.99, 0.49),
+                      alignment: const AlignmentDirectional(-0.99, 0.49),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                         child: Text(
                           'For men',
                           style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -126,9 +128,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(-1, 0.8),
+                      alignment: const AlignmentDirectional(-1, 0.8),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                         child: Text(
                           'Style Lounge Salon',
                           style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -146,13 +148,13 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(0.89, 0.8),
+                      alignment: const AlignmentDirectional(0.89, 0.8),
                       child: FlutterFlowIconButton(
-                        borderColor: Color(0x004B39EF),
+                        borderColor: const Color(0x004B39EF),
                         borderRadius: 20,
                         borderWidth: 1,
                         buttonSize: 40,
-                        fillColor: Color(0x004B39EF),
+                        fillColor: const Color(0x004B39EF),
                         icon: Icon(
                           Icons.favorite_border,
                           color: FlutterFlowTheme.of(context).primaryBackground,
@@ -164,9 +166,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                       ),
                     ),
                     Align(
-                      alignment: AlignmentDirectional(0.96, 0.87),
+                      alignment: const AlignmentDirectional(0.96, 0.87),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 0),
                         child: Text(
                           'Favourite',
                           style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -187,14 +189,14 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+              padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
                     child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 10, 10, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(20, 10, 10, 0),
                       child: MouseRegion(
                         opaque: true,
                         cursor: MouseCursor.defer,
@@ -232,9 +234,9 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   ),
                   Flexible(
                     child: Align(
-                      alignment: AlignmentDirectional(-1, 0),
+                      alignment: const AlignmentDirectional(-1, 0),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 0, 0),
                         child: MouseRegion(
                           opaque: true,
                           cursor: MouseCursor.defer,
@@ -273,7 +275,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 20, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -283,7 +285,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                             print('Button pressed ...');
                           },
                           text: '4.1',
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.star_border_rounded,
                             color: Color(0xFF4F709C),
                             size: 15,
@@ -291,21 +293,21 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                           options: FFButtonOptions(
                             width: 80,
                             height: 40,
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                             iconPadding:
-                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                             color: FlutterFlowTheme.of(context).primaryBackground,
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
                                   fontFamily: FlutterFlowTheme.of(context)
                                       .titleSmallFamily,
-                                  color: Color(0xFF4F709C),
+                                  color: const Color(0xFF4F709C),
                                   useGoogleFonts: GoogleFonts.asMap().containsKey(
                                       FlutterFlowTheme.of(context)
                                           .titleSmallFamily),
                                 ),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color(0xFF4F709C),
                               width: 1,
                             ),
@@ -313,7 +315,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                             hoverTextColor: FlutterFlowTheme.of(context).error,
                           ),
                         ),
-                        SizedBox(height: 2,),
+                        const SizedBox(height: 2,),
                         Text(
                           '5k+ ratings',
                           style: FlutterFlowTheme.of(context).bodyMedium,
@@ -324,7 +326,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: double.infinity,
               child: StyledDivider(
                 thickness: 2,
@@ -334,13 +336,13 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
             ),
             Flexible(
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Flexible(
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.35,
                           height: MediaQuery.of(context).size.height * 0.075,
@@ -349,10 +351,10 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                 FlutterFlowTheme.of(context).secondaryBackground,
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: Color(0x7C8F90A6),
+                              color: const Color(0x7C8F90A6),
                             ),
                           ),
-                          alignment: AlignmentDirectional(0, 0),
+                          alignment: const AlignmentDirectional(0, 0),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -419,7 +421,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 10),
+                      padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 10),
                       child: Text(
                         'About us',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -433,7 +435,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 20),
+                      padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 20),
                       child: Text(
                         'Welcome to Chic Cuts & Co., where style meets innovation! Our highly skilled hairstylists craft personalized haircuts that leave you feeling rejuvenated and confident. With a focus on the latest trends and premium haircare products, we create a look that enhances your natural beauty. Relax in our modern salon and experience the art of haircutting at its finest. Step out with a smile and a hairstyle you\'ll love to flaunt. Order from  us today and discover the difference.',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -446,7 +448,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                       child: Text(
                         'Reviews',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
@@ -459,7 +461,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                             ),
                       ),
                     ),
-                    ReviewCard(
+                    const ReviewCard(
                       profileImageUrl:
                           'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjJ8fHByb2ZpbGV8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60',
                       reviewerName: 'Andrew Daniels',
@@ -473,7 +475,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 80,
             )
           ],

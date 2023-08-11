@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, avoid_print
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -104,11 +106,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   }
 
   // Function to send the reset password request to the API
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   Future<void> sendResetPasswordRequest() async {
     // final email = _emailController.text;
-    final email = 'sharjeelshakeelahmed@gmail.com';
-    final apiUrl = 'http://192.168.0.113:3000/user/resetpassword?email=$email';
+    final apiUrl =
+        'http://192.168.0.113:3000/user/resetpassword?email=$_emailController';
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
@@ -246,7 +248,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   style: GoogleFonts.workSans(
                       fontSize: fonte,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF323B60),
+                      color: const Color(0xFF323B60),
                       decoration: TextDecoration.none),
                 ),
               ),
@@ -258,7 +260,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     style: GoogleFonts.workSans(
                         fontSize: fontSize,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF4F709C),
+                        color: const Color(0xFF4F709C),
                         decoration: TextDecoration.none),
                     textAlign: TextAlign.center,
                   ),
@@ -270,11 +272,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   Container(
                     width: w * 0.8,
                     height: h * 0.08,
-                    margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                    padding: EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+                    padding: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: Color.fromARGB(255, 51, 204, 255), width: 1),
+                          color: const Color.fromARGB(255, 51, 204, 255), width: 1),
                       borderRadius: BorderRadius.circular(30),
                       shape: BoxShape.rectangle,
                     ),
@@ -283,7 +285,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           const EdgeInsets.only(right: 3, top: 2, left: 25),
                       child: TextField(
                           controller: _emailController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               border: InputBorder.none,
                               suffixIcon: Icon(
                                 Icons.email_outlined,
@@ -296,9 +298,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     left: 50,
                     top: 12,
                     child: Container(
-                      padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                      padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
                       color: Colors.white,
-                      child: Text(
+                      child: const Text(
                         'Enter your Email',
                         style: TextStyle(color: Colors.black, fontSize: 12),
                       ),
@@ -313,17 +315,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       await sendResetPasswordRequest();
                     }
                   },
-                  child: Text(
-                    "Send Verification Email",
-                    style: GoogleFonts.workSans(
-                        fontSize: fontSize,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                        decoration: TextDecoration.none),
-                    textAlign: TextAlign.center,
-                  ),
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: Color(0xFF323B60),
+                    backgroundColor: const Color(0xFF323B60),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -333,6 +326,15 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       color: Colors.white54,
                       style: BorderStyle.solid,
                     ),
+                  ),
+                  child: Text(
+                    "Send Verification Email",
+                    style: GoogleFonts.workSans(
+                        fontSize: fontSize,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        decoration: TextDecoration.none),
+                    textAlign: TextAlign.center,
                   )),
               SizedBox(height: w * 0.05 + h * 0.05),
               isResendDisabled
@@ -356,7 +358,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Signup()),
+                      MaterialPageRoute(builder: (context) => const Signup()),
                     );
                   },
                   child: RichText(
@@ -365,7 +367,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         style: GoogleFonts.workSans(
                           fontSize: fontSize,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF4F709C),
+                          color: const Color(0xFF4F709C),
                           decoration: TextDecoration.none,
                         ),
                         children: [
@@ -374,7 +376,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             style: GoogleFonts.workSans(
                                 fontSize: fontSize,
                                 fontWeight: FontWeight.w500,
-                                color: Color(0xFF323B60),
+                                color: const Color(0xFF323B60),
                                 decoration: TextDecoration.none),
                           )
                         ]),

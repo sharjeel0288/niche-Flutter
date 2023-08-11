@@ -184,7 +184,7 @@ class _SellerHomeState extends State<SellerHome> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => AddService()),
+                                          builder: (context) => const AddService()),
                                     );
                                   },
                                   child: const Text(
@@ -204,7 +204,7 @@ class _SellerHomeState extends State<SellerHome> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Services()),
+                                          builder: (context) => const Services()),
                                     );
                                   },
                                   child: const Text(
@@ -281,7 +281,7 @@ class _SellerHomeState extends State<SellerHome> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Reviews()),
+                                      builder: (context) => const Reviews()),
                                 );
                                 // Add your view all functionality here
                               },

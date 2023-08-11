@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:login_niche2/SELLER/SellerHome/seller_home_Screen.dart';
 import 'package:login_niche2/SELLER/SellerHome/widgets/serviceCard.dart';
 import 'package:login_niche2/SELLER/sellerServices/add_service.dart';
-import 'package:login_niche2/SELLER/sellerServices/edit_service.dart';
-import 'package:login_niche2/utils/text_style.dart';
 
 import '../sellerNavbar/seller_navbar.dart';
 

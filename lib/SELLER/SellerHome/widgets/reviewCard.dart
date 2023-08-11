@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class ReviewCard extends StatefulWidget {
@@ -62,7 +64,7 @@ class _ReviewCardState extends State<ReviewCard>
               color: Colors.grey.withOpacity(0.4),
               spreadRadius: 2,
               blurRadius: 4,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
@@ -105,35 +107,35 @@ class _ReviewCardState extends State<ReviewCard>
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.star_rate,
                         color: Color(0xFFFFBD00),
                         size: 20,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.star_rate,
                         color: Color(0xFFFFBD00),
                         size: 20,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.star_rate,
                         color: Color(0xFFFFBD00),
                         size: 20,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.star_rate,
                         color: Color(0xFFFFBD00),
                         size: 20,
                       ),
-                      Icon(
+                      const Icon(
                         Icons.star_half_sharp,
                         color: Color(0xFFFFBD00),
                         size: 20,
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         widget.rating.toString(),
                         style: const TextStyle(
@@ -144,7 +146,7 @@ class _ReviewCardState extends State<ReviewCard>
                       ),
                     ],
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     widget.review,
                     style: const TextStyle(

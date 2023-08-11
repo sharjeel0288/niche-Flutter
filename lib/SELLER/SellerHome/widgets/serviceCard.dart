@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, prefer_const_constructors_in_immutables, use_key_in_widget_constructors, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -37,10 +39,10 @@ class _ServiceCardState extends State<ServiceCard>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
     _slideAnimation =
-        Tween<Offset>(begin: Offset(1, 0), end: Offset.zero).animate(
+        Tween<Offset>(begin: const Offset(1, 0), end: Offset.zero).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeInOut,
@@ -83,9 +85,9 @@ class _ServiceCardState extends State<ServiceCard>
                 borderRadius: BorderRadius.circular(10.0),
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0xFF213555).withOpacity(0.1),
+                    color: const Color(0xFF213555).withOpacity(0.1),
                     blurRadius: 4.0,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
@@ -118,7 +120,7 @@ class _ServiceCardState extends State<ServiceCard>
                                   "Preview",
                                   style: GoogleFonts.dmSans(
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xFF323B60),
+                                    color: const Color(0xFF323B60),
                                     decoration: TextDecoration.none,
                                   ),
                                 ),
@@ -132,7 +134,7 @@ class _ServiceCardState extends State<ServiceCard>
                                   "Edit",
                                   style: GoogleFonts.dmSans(
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xFF323B60),
+                                    color: const Color(0xFF323B60),
                                     decoration: TextDecoration.none,
                                   ),
                                 ),
@@ -146,7 +148,7 @@ class _ServiceCardState extends State<ServiceCard>
                                   "Delete",
                                   style: GoogleFonts.dmSans(
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xFF323B60),
+                                    color: const Color(0xFF323B60),
                                     decoration: TextDecoration.none,
                                   ),
                                 ),
@@ -181,22 +183,22 @@ class _ServiceCardState extends State<ServiceCard>
                         right: 10,
                         child: Container(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.star,
                                 color: Colors.amber,
                                 size: 16,
                               ),
-                              SizedBox(width: 4),
+                              const SizedBox(width: 4),
                               Text(
                                 widget.serviceRatings.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -209,7 +211,7 @@ class _ServiceCardState extends State<ServiceCard>
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(12),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -218,16 +220,16 @@ class _ServiceCardState extends State<ServiceCard>
                           children: [
                             Text(
                               widget.serviceName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             Text(
                               widget.serviceTime,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey,
                               ),
@@ -236,7 +238,7 @@ class _ServiceCardState extends State<ServiceCard>
                         ),
                         Text(
                           '\$${widget.servicePrice.toStringAsFixed(2)}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,

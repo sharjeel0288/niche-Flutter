@@ -176,7 +176,7 @@ print('agya m');
       final headers = {'Content-Type': 'application/json'};
 
       try {
-        final response = await http.post(Uri.parse(api.signupURL),
+        final response = await http.post(Uri.parse('${api.baseURL}verify/resend'),
             headers: headers, body: body);
 
         if (response.statusCode == 200) {

@@ -1,8 +1,9 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, depend_on_referenced_packages, avoid_print, use_build_context_synchronously
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:login_niche2/API/model.dart';
 import 'package:login_niche2/BUYER/buyerNavbar/navbar_buyer.dart';
 import 'package:login_niche2/SELLER/sellerNavbar/seller_navbar.dart';
 import 'package:login_niche2/utils/helperFunctions.dart';
@@ -11,15 +12,16 @@ import 'package:login_niche2/verification/verification_Screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
-  final loginURL = 'http://192.168.0.105:3000/login/user';
-  final signupURL = 'http://192.168.0.105:3000/signup/user';
+  final baseURL = 'http://192.168.0.105:3000/';
+
+  // final signupURL = 'http://192.168.0.105:3000/signup/user';
   final resendVerificationURL = 'http://192.168.0.105:3000/verify/resend';
-  final resetPasswordURL =
-      'http://192.168.0.105:3000/user/resetpassword?email=';
+  // final resetPasswordURL =
+  // 'http://192.168.0.105:3000/user/resetpassword?email=';
 
   Future<void> login(BuildContext context, email, password) async {
     try {
-      final url = Uri.parse(loginURL);
+      final url = Uri.parse('${baseURL}login/user');
       final headers = {'Content-Type': 'application/json'};
       final body = jsonEncode({'email': email, 'password': password});
       print("ajkbakjf");
@@ -57,7 +59,7 @@ class API {
         } else if (responseData['role'] == 'seller') {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => NavbarSeller()),
+            MaterialPageRoute(builder: (context) => const NavbarSeller()),
           );
         }
       } else {
@@ -112,6 +114,37 @@ class API {
           ),
         ),
       );
+    }
+  }
+
+  Future<List<SubCategory>> getsubcategory(String parentid) async {
+    try {
+      print(parentid);
+      String url = "http://192.168.0.105:3000/category/$parentid";
+      var result = await http.get(Uri.parse(url));
+      print(result.body);
+      final subcategory = (jsonDecode(result.body) as List)
+          .map((item) => SubCategory.fromJson(item))
+          .toList();
+      return subcategory;
+    } catch (error) {
+      print("Error getting subcategories: $error");
+      rethrow; // Rethrow the error for upper layers to handle
+    }
+  }
+
+  Future<List<Category>> getcategory() async {
+    try {
+      String url = "http://192.168.0.105:3000/category";
+      var result = await http.get(Uri.parse(url));
+      print(result.body);
+      final category = (jsonDecode(result.body) as List)
+          .map((item) => Category.fromJson(item))
+          .toList();
+      return category;
+    } catch (error) {
+      print("Error getting categories: $error");
+      rethrow; // Rethrow the error for upper layers to handle
     }
   }
 }

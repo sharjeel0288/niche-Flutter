@@ -1,10 +1,13 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'package:get/get.dart';
+import 'package:login_niche2/login/login_Screen.dart';
 import 'package:login_niche2/utils/flutterflow/flutter_flow_expanded_image_view.dart';
 import 'package:login_niche2/utils/flutterflow/flutter_flow_theme.dart';
 import 'package:login_niche2/utils/flutterflow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'buyer_profile_model.dart';
 export 'buyer_profile_model.dart';
@@ -51,13 +54,15 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
+                    padding:
+                        const EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(12, 12, 0, 8),
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              12, 12, 0, 8),
                           child: Text(
                             'Account Options',
                             textAlign: TextAlign.start,
@@ -75,7 +80,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                          padding:
+                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,8 +150,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
-                                            0, 4, 0, 0),
+                                        padding: const EdgeInsetsDirectional
+                                            .fromSTEB(0, 4, 0, 0),
                                         child: Text(
                                           'randy.p@domainname.com',
                                           style: FlutterFlowTheme.of(context)
@@ -208,7 +214,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                             setState(() => _model.mouseRegionHovered1 = false);
                           }),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 5),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeInOut,
@@ -221,8 +228,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -242,9 +249,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Your favourites',
                                               style: FlutterFlowTheme.of(
@@ -253,7 +259,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                                   .override(
                                                     fontFamily:
                                                         'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
+                                                    color:
+                                                        const Color(0xFF14181B),
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     useGoogleFonts: GoogleFonts
@@ -266,9 +273,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Reorder your favorite service in a click',
                                               style: FlutterFlowTheme.of(
@@ -295,8 +301,9 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 5, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         color: FlutterFlowTheme.of(context)
@@ -320,7 +327,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                             setState(() => _model.mouseRegionHovered2 = false);
                           }),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 5),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeInOut,
@@ -333,14 +341,15 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 0, 0, 0),
                                       child: Icon(
                                         Icons.bookmark,
                                         color: FlutterFlowTheme.of(context)
@@ -355,9 +364,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Bookings',
                                               style: FlutterFlowTheme.of(
@@ -366,7 +374,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                                   .override(
                                                     fontFamily:
                                                         'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
+                                                    color:
+                                                        const Color(0xFF14181B),
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     useGoogleFonts: GoogleFonts
@@ -379,9 +388,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'See all of your bookings in one place',
                                               style: FlutterFlowTheme.of(
@@ -408,8 +416,9 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 5, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         color: FlutterFlowTheme.of(context)
@@ -433,7 +442,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                             setState(() => _model.mouseRegionHovered3 = false);
                           }),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 5),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeInOut,
@@ -446,14 +456,15 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 0, 0, 0),
                                       child: Icon(
                                         Icons.payment,
                                         color: FlutterFlowTheme.of(context)
@@ -468,9 +479,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Payments',
                                               style: FlutterFlowTheme.of(
@@ -479,7 +489,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                                   .override(
                                                     fontFamily:
                                                         'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
+                                                    color:
+                                                        const Color(0xFF14181B),
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     useGoogleFonts: GoogleFonts
@@ -492,9 +503,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Payment methods, Transaction History ',
                                               style: FlutterFlowTheme.of(
@@ -521,8 +531,9 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 5, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         color: FlutterFlowTheme.of(context)
@@ -546,7 +557,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                             setState(() => _model.mouseRegionHovered4 = false);
                           }),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 5),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeInOut,
@@ -559,14 +571,15 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 0, 0, 0),
                                       child: Icon(
                                         Icons.location_on,
                                         color: FlutterFlowTheme.of(context)
@@ -581,9 +594,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Manage Address',
                                               style: FlutterFlowTheme.of(
@@ -592,7 +604,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                                   .override(
                                                     fontFamily:
                                                         'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
+                                                    color:
+                                                        const Color(0xFF14181B),
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     useGoogleFonts: GoogleFonts
@@ -608,8 +621,9 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 5, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         color: FlutterFlowTheme.of(context)
@@ -633,7 +647,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                             setState(() => _model.mouseRegionHovered5 = false);
                           }),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 5),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeInOut,
@@ -646,14 +661,15 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 0, 0, 0),
                                       child: Icon(
                                         Icons.notifications,
                                         color: FlutterFlowTheme.of(context)
@@ -668,9 +684,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Notifications',
                                               style: FlutterFlowTheme.of(
@@ -679,7 +694,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                                   .override(
                                                     fontFamily:
                                                         'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
+                                                    color:
+                                                        const Color(0xFF14181B),
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     useGoogleFonts: GoogleFonts
@@ -692,9 +708,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'View your past notifications',
                                               style: FlutterFlowTheme.of(
@@ -721,8 +736,9 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 5, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         color: FlutterFlowTheme.of(context)
@@ -746,7 +762,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                             setState(() => _model.mouseRegionHovered6 = false);
                           }),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 5),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeInOut,
@@ -759,14 +776,15 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 0, 0, 0),
                                       child: Icon(
                                         Icons.badge_rounded,
                                         color: FlutterFlowTheme.of(context)
@@ -781,9 +799,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Switch to Seller',
                                               style: FlutterFlowTheme.of(
@@ -792,7 +809,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                                   .override(
                                                     fontFamily:
                                                         'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
+                                                    color:
+                                                        const Color(0xFF14181B),
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     useGoogleFonts: GoogleFonts
@@ -805,9 +823,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Want to list your service? Register with us',
                                               style: FlutterFlowTheme.of(
@@ -834,8 +851,9 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 5, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         color: FlutterFlowTheme.of(context)
@@ -859,7 +877,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                             setState(() => _model.mouseRegionHovered7 = false);
                           }),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 5),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeInOut,
@@ -872,14 +891,15 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 0, 0, 0),
                                       child: Icon(
                                         Icons.room_service_sharp,
                                         color: FlutterFlowTheme.of(context)
@@ -894,9 +914,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Request a servive',
                                               style: FlutterFlowTheme.of(
@@ -905,7 +924,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                                   .override(
                                                     fontFamily:
                                                         'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
+                                                    color:
+                                                        const Color(0xFF14181B),
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     useGoogleFonts: GoogleFonts
@@ -921,8 +941,9 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 5, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         color: FlutterFlowTheme.of(context)
@@ -946,7 +967,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                             setState(() => _model.mouseRegionHovered8 = false);
                           }),
                           child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 5, 0, 5),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeInOut,
@@ -959,14 +981,15 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              12, 0, 0, 0),
                                       child: Icon(
                                         Icons.info_outline,
                                         color: FlutterFlowTheme.of(context)
@@ -981,9 +1004,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'About',
                                               style: FlutterFlowTheme.of(
@@ -992,7 +1014,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                                   .override(
                                                     fontFamily:
                                                         'Plus Jakarta Sans',
-                                                    color: const Color(0xFF14181B),
+                                                    color:
+                                                        const Color(0xFF14181B),
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
                                                     useGoogleFonts: GoogleFonts
@@ -1005,9 +1028,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                             ),
                                           ),
                                           Padding(
-                                            padding:
-                                                const EdgeInsetsDirectional.fromSTEB(
-                                                    12, 0, 0, 0),
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(12, 0, 0, 0),
                                             child: Text(
                                               'Privacy Policy, Terms of Services, Licenses',
                                               style: FlutterFlowTheme.of(
@@ -1034,8 +1056,9 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 5, 0),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0, 0, 5, 0),
                                       child: Icon(
                                         Icons.arrow_forward_ios_sharp,
                                         color: FlutterFlowTheme.of(context)
@@ -1063,8 +1086,8 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                             setState(() => _model.mouseRegionHovered9 = false);
                           }),
                           child: Padding(
-                            padding:
-                                const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 5),
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 5),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 150),
                               curve: Curves.easeInOut,
@@ -1077,49 +1100,67 @@ class _BuyerProfWidgetState extends State<BuyerProfWidget> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.fromSTEB(0, 8, 0, 8),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
-                                      child: Icon(
-                                        Icons.login_rounded,
-                                        color: Color(0xFFFF0000),
-                                        size: 20,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 8, 0, 8),
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.remove('userEmail');
+                                    prefs.remove('userPassword');
+                                    prefs.remove('token');
+                                    prefs.remove('role');
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginScreen()),
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      const Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             12, 0, 0, 0),
-                                        child: Text(
-                                          'Log out',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color: const Color(0xFFFF0000),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                useGoogleFonts: GoogleFonts
-                                                        .asMap()
-                                                    .containsKey(
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMediumFamily),
-                                              ),
+                                        child: Icon(
+                                          Icons.login_rounded,
+                                          color: Color(0xFFFF0000),
+                                          size: 20,
                                         ),
                                       ),
-                                    ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios_sharp,
-                                      color: Color(0xFFFF0000),
-                                      size: 15,
-                                    ),
-                                  ],
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(12, 0, 0, 0),
+                                          child: Text(
+                                            'Log out',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily:
+                                                      'Plus Jakarta Sans',
+                                                  color:
+                                                      const Color(0xFFFF0000),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  useGoogleFonts: GoogleFonts
+                                                          .asMap()
+                                                      .containsKey(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodyMediumFamily),
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.arrow_forward_ios_sharp,
+                                        color: Color(0xFFFF0000),
+                                        size: 15,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

@@ -137,6 +137,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: ce75a1b40947fea0a0e16ce73337122a86762e38b982e1ccb909daa3b9bc4197
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.2"
   dotted_decoration:
     dependency: transitive
     description:
@@ -909,6 +917,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  stylish_dialog:
+    dependency: "direct main"
+    description:
+      name: stylish_dialog
+      sha256: "3967a710901db1495d7cac32e76758a327ec6f68f8b75905732c0397ba899c84"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.13"
   synchronized:
     dependency: transitive
     description:
