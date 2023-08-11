@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison
 
 import 'dart:io';
 
@@ -13,6 +13,7 @@ import 'package:login_niche2/SELLER/sellerServices/widgets/stackedDropdown.dart'
 import 'package:login_niche2/utils/helperFunctions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stylish_dialog/stylish_dialog.dart';
+import 'package:login_niche2/SELLER/sellerServices/services.dart';
 import 'package:dio/dio.dart' as dio; // Use a unique prefix for Dio library
 // import 'package:get/get_connect/http.dart' as getConnect;
 
@@ -48,7 +49,7 @@ class _AddServiceState extends State<AddService> {
 
   bool isNumeric(String str) {
     // A simple function to check if a string represents a valid number
-    if (str == null) {
+    if (str.isEmpty) {
       return false;
     }
     return double.tryParse(str) != null;
@@ -78,18 +79,18 @@ class _AddServiceState extends State<AddService> {
       dioInstance.options.headers['token'] = authToken;
       print(formData.fields);
       dio.Response response = await dioInstance.post(
-        'http://192.168.0.105:3000/service',
+        '${_api.baseURL}service',
         data: formData,
       );
 
       if (response.statusCode == 200) {
         print('Service added successfully');
-        StylishDialog(
-          context: context,
-          alertType: StylishDialogType.SUCCESS,
-          titleText: 'Congratulations',
-          contentText: 'You successfully posted your service',
-        ).show();
+        successPopUp(context, 'Congratulations',
+            'You successfully posted your service', 'success.json', () {
+          // Dismiss the dialog when OK is pressed
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Services()));
+        });
       } else {
         print('Error adding service: ${response.data}');
       }
@@ -340,7 +341,8 @@ class _AddServiceState extends State<AddService> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.keyboard_backspace, color: Colors.black),
+                    icon: const Icon(Icons.keyboard_backspace,
+                        color: Colors.black),
                     onPressed: () => Navigator.pop(context),
                   ),
                   Text(
