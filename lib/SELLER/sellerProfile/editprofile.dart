@@ -1,11 +1,22 @@
 // ignore_for_file: avoid_print, unused_field, unused_local_variable, prefer_typing_uninitialized_variables, unused_element
 
+import 'dart:convert';
+
 import 'dart:io';
+
+import 'package:dio/dio.dart' as dio;
+import 'package:login_niche2/API/API.dart';
+
+import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:get/get.dart';
+import 'package:login_niche2/API/model.dart';
+import 'package:login_niche2/SELLER/sellerProfile/seller_profile.dart';
+import 'package:login_niche2/utils/helperFunctions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -15,15 +26,113 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  XFile? image;
-  late PickedFile _imageFile;
+  List<User>? lister;
+  File? imageFile;
+  final _api = API();
   final ImagePicker picker = ImagePicker();
+  final TextEditingController role = TextEditingController(),
+      firstname = TextEditingController(),
+      lastname = TextEditingController(),
+      username = TextEditingController(),
+      email = TextEditingController(),
+      password = TextEditingController(),
+      phone = TextEditingController(),
+      address = TextEditingController(),
+      city = TextEditingController(),
+      state = TextEditingController(),
+      zip = TextEditingController(),
+      bio = TextEditingController();
+
+  // Future getImage(ImageSource media) async {
+  //   var img = await picker.pickImage(source: media);
+
+  //   setState(() {
+  //     print("Helooooooooooooooooooooooooooooooooooooo");
+  //     imageFile = img;
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    getapidata();
+    // print("helooooooooooooo465654545");
+    // print(lister![0].profilePicture);
+  }
+
+  Future<void> updateProfile() async {
+    print("hello");
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String authToken = prefs.getString('token') ?? '';
+
+      dio.FormData formData = dio.FormData();
+
+      // if (imageFile != null) {
+      //   formData.files.add(MapEntry(
+      //     'profile_picture',
+      //     await dio.MultipartFile.fromFile(imageFile!.path),
+      //   ));
+      // }
+
+      Map<String, String> fields = {
+        'username': username.text,
+        'email': email.text,
+        'first_name': firstname.text,
+        'last_name': lastname.text,
+        'bio': bio.text,
+        'user_phone': phone.text,
+        'user_address': address.text,
+        'user_city': city.text,
+        'user_state': state.text,
+        'user_country': lister![0].userCountry,
+        'user_zipcode': zip.text,
+      };
+
+      fields.forEach((key, value) {
+        if (value.isNotEmpty) {
+          formData.fields.add(MapEntry(key, value));
+        }
+      });
+      if (imageFile != null)
+        formData.files.add(MapEntry(
+          'image',
+          await dio.MultipartFile.fromFile(imageFile!.path),
+        ));
+
+      dio.Dio dioInstance = dio.Dio();
+      dioInstance.options.headers['token'] = authToken;
+
+      dio.Response response = await dioInstance.put(
+        '${_api.baseURL}seller/updateprofile',
+        data: formData,
+      );
+
+      if (response.statusCode == 200) {
+        print('Profile updated successfully');
+        successPopUp(context, 'Profile Updated',
+            'Your profile has been successfully updated', 'success.json', () {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => Seller_Profile()));
+        });
+      } else {
+        print('Error updating profile: ${response.data}');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
   Future getImage(ImageSource media) async {
     var img = await picker.pickImage(source: media);
 
     setState(() {
-      print("Helooooooooooooooooooooooooooooooooooooo");
-      image = img;
+      if (img != null) {
+        print(img.path);
+
+        // If running in Flutter environment, use XFile
+        imageFile = File(img.path);
+      }
     });
   }
 
@@ -31,6 +140,7 @@ class _EditProfileState extends State<EditProfile> {
   Widget build(BuildContext context) {
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
+    String word = "aaa\\aa/";
 
     var height;
 
@@ -49,11 +159,60 @@ class _EditProfileState extends State<EditProfile> {
       fontSize = 22.0;
       fonte = 18.0;
     }
-    void takePhoto(ImageSource source) async {
-      final pickedFile = await picker.pickImage(source: source);
-      setState(() {
-        _imageFile = pickedFile as PickedFile;
-      });
+
+    final API _api = API();
+    Widget form(TextEditingController control, String hint, String heading,
+        bool enable) {
+      return Stack(
+        children: <Widget>[
+          Container(
+            width: w * 0.9,
+            height: h * 0.07,
+            margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
+            padding: const EdgeInsets.only(bottom: 10),
+            decoration: BoxDecoration(
+              border: Border.all(color: const Color(0xFF4F709C), width: 1),
+              borderRadius: BorderRadius.circular(10),
+              shape: BoxShape.rectangle,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 3, top: 3, left: 25),
+              child: TextField(
+                  enabled: enable,
+                  controller: control,
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: hint,
+                      hintStyle: GoogleFonts.workSans(
+                          fontSize: fonte,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF4F709C),
+                          decoration: TextDecoration.none),
+                      suffixIcon: const Icon(
+                        Icons.person_outline,
+                        size: 25,
+                        color: Color(0xFF4F709C),
+                      ))),
+            ),
+          ),
+          Positioned(
+            left: 35,
+            top: 12,
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+              color: Colors.white,
+              child: Text(
+                heading,
+                style: GoogleFonts.workSans(
+                    fontSize: fonte,
+                    fontWeight: FontWeight.w500,
+                    color: const Color(0xFF4F709C),
+                    decoration: TextDecoration.none),
+              ),
+            ),
+          ),
+        ],
+      );
     }
 
     Widget bottomsheet() {
@@ -82,9 +241,7 @@ class _EditProfileState extends State<EditProfile> {
                 Column(
                   children: [
                     IconButton(
-                      onPressed: () {
-                        getImage(ImageSource.camera);
-                      },
+                      onPressed: () => getImage(ImageSource.camera),
                       icon: const Icon(Icons.camera_alt),
                       tooltip: "Camera",
                       iconSize: h * 0.04 + w * 0.04,
@@ -95,9 +252,7 @@ class _EditProfileState extends State<EditProfile> {
                 Column(
                   children: [
                     IconButton(
-                      onPressed: () {
-                        getImage(ImageSource.gallery);
-                      },
+                      onPressed: () => getImage(ImageSource.gallery),
                       icon: const Icon(Icons.image),
                       tooltip: "Gallery",
                       iconSize: h * 0.04 + w * 0.04,
@@ -112,375 +267,195 @@ class _EditProfileState extends State<EditProfile> {
       );
     }
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
+    if (lister != null) {
+      return Scaffold(
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        elevation: 2,
-        title: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset(
-            'assets/niche.png',
-            width: 123,
-            height: 54,
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              print('Notification button pressed');
-            },
-            icon: const Icon(
-              Icons.notifications_active_rounded,
-              color: Color.fromARGB(255, 12, 3, 30),
-              size: 30,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          elevation: 2,
+          title: ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: Image.asset(
+              'assets/niche.png',
+              width: 123,
+              height: 54,
+              fit: BoxFit.fitWidth,
             ),
           ),
-          IconButton(
-            onPressed: () {
-              print('Messages button pressed');
-            },
-            icon: const Icon(
-              Icons.message_rounded,
-              color: Color.fromARGB(255, 12, 3, 30),
-              size: 30,
-            ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.keyboard_backspace,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    tooltip:
-                        MaterialLocalizations.of(context).openAppDrawerTooltip,
-                  ),
-                  Text(
-                    "Edit Profile",
-                    style: GoogleFonts.dmSans(
-                        fontSize: fontSize,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF323B60),
-                        decoration: TextDecoration.none),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.done,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    tooltip:
-                        MaterialLocalizations.of(context).openAppDrawerTooltip,
-                  ),
-                ],
+          actions: [
+            IconButton(
+              onPressed: () {
+                print('Notification button pressed');
+              },
+              icon: const Icon(
+                Icons.notifications_active_rounded,
+                color: Color.fromARGB(255, 12, 3, 30),
+                size: 30,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, bottom: 10),
-              child: CircleAvatar(
-                  radius: h * 0.05 + w * 0.05,
-                  backgroundColor: Colors.blue,
-                  child: image != null
-                      ? CircleAvatar(
-                          radius: h * 0.045 + w * 0.045,
-                          // backgroundColor: Colors.red,
-                          backgroundImage: FileImage(
-                            File(image!.path),
-                          ),
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: CircleAvatar(
-                              radius: h * 0.018 + w * 0.018,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                  radius: h * 0.015 + w * 0.015,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.linked_camera_outlined,
-                                      color: Colors.white,
-                                      weight: 100,
-                                    ),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                          backgroundColor: const Color(0xFFCEB290),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          context: context,
-                                          builder: ((builder) =>
-                                              bottomsheet()));
-                                    },
-                                  )),
-                            ),
-                          ))
-                      : CircleAvatar(
-                          radius: h * 0.045 + w * 0.045,
-                          // backgroundColor: Colors.red,
-                          backgroundImage: const AssetImage("assets/peter.jpeg"),
-                          child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: CircleAvatar(
-                              radius: h * 0.018 + w * 0.018,
-                              backgroundColor: Colors.white,
-                              child: CircleAvatar(
-                                  radius: h * 0.015 + w * 0.015,
-                                  child: IconButton(
-                                    icon: const Icon(
-                                      Icons.linked_camera_outlined,
-                                      color: Colors.white,
-                                      weight: 100,
-                                    ),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                          backgroundColor: const Color(0xFFCEB290),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          context: context,
-                                          builder: ((builder) =>
-                                              bottomsheet()));
-                                    },
-                                  )),
-                            ),
-                          ))),
-            ),
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xFF4F709C), width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 3, top: 3, left: 25),
-                    child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Joenda Elezewe",
-                            hintStyle: GoogleFonts.workSans(
-                                fontSize: fonte,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF4F709C),
-                                decoration: TextDecoration.none),
-                            suffixIcon: const Icon(
-                              Icons.person_outline,
-                              size: 25,
-                              color: Color(0xFF4F709C),
-                            ))),
-                  ),
-                ),
-                Positioned(
-                  left: 35,
-                  top: 12,
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'Full Name',
-                      style: GoogleFonts.workSans(
-                          fontSize: fonte,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF4F709C),
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xFF4F709C), width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 3, top: 3, left: 25),
-                    child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "Joenda123",
-                            hintStyle: GoogleFonts.workSans(
-                                fontSize: fonte,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF4F709C),
-                                decoration: TextDecoration.none),
-                            suffixIcon: const Icon(
-                              Icons.person_outline,
-                              size: 25,
-                              color: Color(0xFF4F709C),
-                            ))),
-                  ),
-                ),
-                Positioned(
-                  left: 35,
-                  top: 12,
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'User Name',
-                      style: GoogleFonts.workSans(
-                          fontSize: fonte,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF4F709C),
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xFF4F709C), width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 3, top: 3, left: 25),
-                    child: TextField(
-                        textAlign: TextAlign.start,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "joendaelezewe@gmail.com",
-                            alignLabelWithHint: true,
-                            hintStyle: GoogleFonts.workSans(
-                                fontSize: fonte,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF4F709C),
-                                decoration: TextDecoration.none),
-                            suffixIcon: const Icon(
-                              Icons.email_outlined,
-                              size: 25,
-                              color: Color(0xFF4F709C),
-                            ))),
-                  ),
-                ),
-                Positioned(
-                  left: 35,
-                  top: 12,
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'Email',
-                      style: GoogleFonts.workSans(
-                          fontSize: fonte,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF4F709C),
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: const Color(0xFF4F709C), width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 3, top: 3, left: 25),
-                    child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "*********",
-                            hintStyle: GoogleFonts.workSans(
-                                fontSize: fonte,
-                                fontWeight: FontWeight.w500,
-                                color: const Color(0xFF4F709C),
-                                decoration: TextDecoration.none),
-                            suffixIcon: const Icon(
-                              Icons.password,
-                              size: 25,
-                              color: Color(0xFF4F709C),
-                            ))),
-                  ),
-                ),
-                Positioned(
-                  left: 35,
-                  top: 12,
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'Password',
-                      style: GoogleFonts.workSans(
-                          fontSize: fonte,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF4F709C),
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 20, bottom: 5),
-              child: Container(
-                width: Get.width * 1,
-                height: Get.height * 0.06,
-                decoration: BoxDecoration(
-                  // border: Border.all(width: 3.0),R
-                  borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xFF4F709C),
-                ),
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "Confirm",
-                    style: GoogleFonts.dmSans(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.none),
-                  ),
-                ),
+            IconButton(
+              onPressed: () {
+                print('Messages button pressed');
+              },
+              icon: const Icon(
+                Icons.message_rounded,
+                color: Color.fromARGB(255, 12, 3, 30),
+                size: 30,
               ),
-            )
+            ),
           ],
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.keyboard_backspace,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      tooltip: MaterialLocalizations.of(context)
+                          .openAppDrawerTooltip,
+                    ),
+                    Text(
+                      "Edit Profile",
+                      style: GoogleFonts.dmSans(
+                          fontSize: fontSize,
+                          fontWeight: FontWeight.w600,
+                          color: const Color(0xFF323B60),
+                          decoration: TextDecoration.none),
+                    ),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.done,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      tooltip: MaterialLocalizations.of(context)
+                          .openAppDrawerTooltip,
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10),
+                child: CircleAvatar(
+                  radius: h * 0.05 + w * 0.05,
+                  backgroundColor: Colors.blue,
+                  backgroundImage: imageFile != null
+                      ? FileImage(File(imageFile!.path))
+                      : lister![0].profilePicture.isNotEmpty
+                          ? NetworkImage((_api.baseURL +
+                                  lister![0].profilePicture.toString())
+                              .replaceAll(word[3], word[6]))
+                          : AssetImage(
+                                  'assets/images/default_profilePicture.png')
+                              as ImageProvider, // Use 'as ImageProvider' to explicitly cast
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: CircleAvatar(
+                      radius: h * 0.018 + w * 0.018,
+                      backgroundColor: Colors.white,
+                      child: CircleAvatar(
+                        radius: h * 0.015 + w * 0.015,
+                        child: IconButton(
+                          icon: const Icon(
+                            Icons.linked_camera_outlined,
+                            color: Colors.white,
+                            weight: 100,
+                          ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                              backgroundColor: const Color(0xFFCEB290),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              context: context,
+                              builder: (builder) => bottomsheet(),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              form(role, lister![0].role.toString(), "Role", false),
+              form(firstname, lister![0].firstName.toString(), "First Name",
+                  true),
+              form(lastname, lister![0].lastName.toString(), "Last Name", true),
+              form(username, lister![0].username.toString(), "User Name", true),
+              form(email, lister![0].email.toString(), "Email", false),
+              form(password, "********", "Password", false),
+              form(
+                  phone, lister![0].userPhone.toString(), "Phone Number", true),
+              form(address, lister![0].userAddress.toString(), "Address", true),
+              form(city, lister![0].userCity.toString(), "City", true),
+              form(state, lister![0].userState.toString(), "State", true),
+              form(zip, lister![0].userZipcode.toString(), "ZipCode", true),
+              form(bio, lister![0].bio.toString(), "Your Bio", true),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 20, bottom: 5),
+                child: Container(
+                  width: Get.width * 1,
+                  height: Get.height * 0.06,
+                  decoration: BoxDecoration(
+                    // border: Border.all(width: 3.0),R
+                    borderRadius: BorderRadius.circular(8),
+                    color: const Color(0xFF4F709C),
+                  ),
+                  child: TextButton(
+                    onPressed: () async {
+                      // print(imageFile!.path);
+                      // print("Image URL");
+                      await updateProfile();
+                      // print(firstname);
+                    },
+                    child: Text(
+                      "Confirm",
+                      style: GoogleFonts.dmSans(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          decoration: TextDecoration.none),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Container();
+    }
+  }
+
+  Future<void> getapidata() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String authToken = prefs.getString('token') ?? '';
+    // print(authToken);
+    String url = "${_api.baseURL}seller/viewprofile";
+
+    var result = await http.get(Uri.parse(url), headers: {'Token': authToken});
+    print(result.body);
+    lister = await jsonDecode(result.body)
+        .map((item) => User.fromJson(item))
+        .toList()
+        .cast<User>();
+    print(lister);
+
+    setState(() {});
   }
 }

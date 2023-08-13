@@ -15,7 +15,7 @@ class API {
   final baseURL = 'http://192.168.0.105:3000/';
 
   // final signupURL = 'http://192.168.0.105:3000/signup/user';
-  final resendVerificationURL = 'http://192.168.0.105:3000/verify/resend';
+  // final resendVerificationURL = 'http://192.168.0.105:3000/verify/resend';
   // final resetPasswordURL =
   // 'http://192.168.0.105:3000/user/resetpassword?email=';
 
@@ -29,6 +29,7 @@ class API {
       print("ajkbakjf");
 
       print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body);
         print(response.body);

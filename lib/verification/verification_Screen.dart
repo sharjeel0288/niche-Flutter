@@ -29,7 +29,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   int resendTimer = 30;
   int tempTimer = 30;
   Timer? _timer;
-  final api=API();
+  final api = API();
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -50,7 +50,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   void startResendTimer() {
     setState(() {
       isResendDisabled = true;
-      tempTimer = tempTimer *2;
+      tempTimer = tempTimer * 2;
       resendTimer = tempTimer;
     });
 
@@ -66,7 +66,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
   }
 
   Future<void> resendVerificationEmail() async {
-    final url = Uri.parse(api.resendVerificationURL);
+    final url = Uri.parse('${api.baseURL}verify/resend');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({'email': widget.email});
 

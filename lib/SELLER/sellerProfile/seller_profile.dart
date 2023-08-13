@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:login_niche2/SELLER/sellerNavbar/seller_navbar.dart';
 import 'package:login_niche2/SELLER/sellerProfile/widgets/menuCard.dart';
 import 'package:login_niche2/login/login_Screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'editprofile.dart';
 
@@ -263,12 +264,18 @@ class _Seller_ProfileState extends State<Seller_Profile> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const NavbarSeller()));
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.remove('userEmail');
+                            prefs.remove('userPassword');
+                            prefs.remove('token');
+                            prefs.remove('role');
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()),
+                            );
                           },
                           child: Text(
                             "Logout",

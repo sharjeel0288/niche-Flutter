@@ -108,9 +108,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   // Function to send the reset password request to the API
   final TextEditingController _emailController = TextEditingController();
   Future<void> sendResetPasswordRequest() async {
-    // final email = _emailController.text;
+    final email = _emailController.text;
     final apiUrl =
-        'http://192.168.0.113:3000/user/resetpassword?email=$_emailController';
+        '${api.baseURL}user/resetpassword?email=$email';
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
