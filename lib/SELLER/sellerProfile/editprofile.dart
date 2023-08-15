@@ -76,11 +76,13 @@ class _EditProfileState extends State<EditProfile> {
       // }
 
       Map<String, String> fields = {
+        // 'user_id': lister![0].userId.toString(),
         'username': username.text,
         'email': email.text,
         'first_name': firstname.text,
         'last_name': lastname.text,
         'bio': bio.text,
+        // 'role': lister![0].role,
         'user_phone': phone.text,
         'user_address': address.text,
         'user_city': city.text,

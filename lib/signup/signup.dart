@@ -157,27 +157,41 @@ class _SignupState extends State<Signup> {
       final userStateText = userState.text;
       final userZipcodeText = userZipcode.text;
       final userPhoneText = userPhone.text;
-print('agya m');
+      print('agya m');
       final body = jsonEncode({
-        'first_name': firstNameText,
-        'last_name': lastNameText,
-        'username': usernameText,
-        'email': emailText,
-        'password': passwordText,
-        'role': roleValue,
-        'user_address': userAddressText,
-        'user_city': userCityText,
-        'user_state': userStateText,
-        'user_country': 'Canada',
-        'user_zipcode': userZipcodeText,
-        'user_phone': userPhoneText,
+        // 'first_name': "firstNameText",
+        // 'last_name': "lastNameText",
+        // 'username': "usernameText",
+        // 'email': "sharjeel@gmail.com",
+        // 'password': "passwordText",
+        // 'role': "seller",
+        // 'user_address': "userAddressText",
+        // 'user_city': "userCityText",
+        // 'user_state': "userStateText",
+        // 'user_country': 'Canada',
+        // 'user_zipcode': "userZipcodeText",
+        // 'user_phone': "userPhoneText",
+         "first_name": firstNameText,
+        "last_name": lastNameText,
+        "username": usernameText,
+        "email": emailText,
+        "password": passwordText,
+        "role": roleValue,
+        "user_address": userAddressText,
+        "user_city": userCityText,
+        "user_state": userStateText,
+        "user_country": "Canada",
+        "user_zipcode": userZipcodeText,
+        "user_phone": userPhoneText
       });
 
       final headers = {'Content-Type': 'application/json'};
 
       try {
-        final response = await http.post(Uri.parse('${api.baseURL}verify/resend'),
-            headers: headers, body: body);
+        final response = await http.post(
+            Uri.parse('${api.baseURL}signup/user'),
+            headers: headers,
+            body: body);
 
         if (response.statusCode == 200) {
           print('User created successfully');
@@ -309,8 +323,7 @@ print('agya m');
                   ),
                 ],
               ),
-              child:
-              DropdownButtonFormField<String>(
+              child: DropdownButtonFormField<String>(
                 isExpanded: true,
                 hint: Text(
                   "Buyer/Seller",
@@ -456,9 +469,9 @@ print('agya m');
                 // userCountry.text = "USA";
                 // userZipcode.text='12125';
                 // userPhone.text = "243536353";
-                if (isAllFieldsValid(context)) {
+                // if (isAllFieldsValid(context)) {
                   signUp();
-                }
+                // }
               },
               style: ElevatedButton.styleFrom(
                 primary:

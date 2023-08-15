@@ -12,7 +12,7 @@ import 'package:login_niche2/verification/verification_Screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class API {
-  final baseURL = 'http://192.168.0.105:3000/';
+  final baseURL = 'http://192.168.0.100:3000/';
 
   // final signupURL = 'http://192.168.0.105:3000/signup/user';
   // final resendVerificationURL = 'http://192.168.0.105:3000/verify/resend';
