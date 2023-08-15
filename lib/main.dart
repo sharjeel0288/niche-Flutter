@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login_niche2/SELLER/sellerServices/add_service.dart';
+import 'package:login_niche2/SELLER/sellerServices/edit_service.dart';
 import 'package:login_niche2/SplashScreen/Splash_Screen.dart';
 import 'package:login_niche2/about/screen/aboutScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,28 +72,28 @@ class _MyAppState extends State<MyApp> {
 
     if (isFirstTime) {
       // Show splash screen here
-      return MaterialApp(
+      return const MaterialApp(
         home: SplashScreen(), // Replace with your splash screen widget
       );
     } else {
       // Your navigation logic remains the same
-      return MaterialApp(
+      return const MaterialApp(
         home: Scaffold(
-          // body: LoginScreen(),
-          body: route == 'buyer'
-              ? const NavbarBuyer()
-              : route == 'seller'
-                  ? const NavbarSeller()
-                  : route == 'login'
-                      ? const LoginScreen()
-                      : Center(
-                          child: LoadingAnimationWidget.discreteCircle(
-                            color: Colors.blueAccent,
-                            size: screenWidth * 0.34,
-                            secondRingColor: Colors.brown.shade400,
-                            thirdRingColor: Colors.purple,
-                          ),
-                        ),
+          body: NavbarBuyer(),
+          // body: route == 'buyer'
+          //     ? const NavbarBuyer()
+          //     : route == 'seller'
+          //         ? const NavbarSeller()
+          //         : route == 'login'
+          //             ? const LoginScreen()
+          //             : Center(
+          //                 child: LoadingAnimationWidget.discreteCircle(
+          //                   color: Colors.blueAccent,
+          //                   size: screenWidth * 0.34,
+          //                   secondRingColor: Colors.brown.shade400,
+          //                   thirdRingColor: Colors.purple,
+          //                 ),
+          //               ),
         ),
       );
     }

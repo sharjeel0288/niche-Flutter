@@ -1,387 +1,297 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: use_build_context_synchronously, unnecessary_null_comparison
 
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:http/http.dart' as https;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:login_niche2/SELLER/sellerProfile/seller_profile.dart';
 import 'package:get/get.dart';
+import 'package:login_niche2/API/API.dart';
+import 'package:login_niche2/API/model.dart';
+import 'package:login_niche2/SELLER/sellerServices/widgets/stackedContainer.dart';
+import 'package:login_niche2/SELLER/sellerServices/widgets/stackedDropdown.dart';
+import 'package:login_niche2/utils/helperFunctions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stylish_dialog/stylish_dialog.dart';
 import 'package:login_niche2/SELLER/sellerServices/services.dart';
+import 'package:dio/dio.dart' as dio; // Use a unique prefix for Dio library
+// import 'package:get/get_connect/http.dart' as getConnect;
 
 class EditService extends StatefulWidget {
-  const EditService({Key? key}) : super(key: key);
-
-
+  const EditService({Key? key, required this.id}) : super(key: key);
+  final String id;
   @override
   State<EditService> createState() => _EditServiceState();
-
 }
 
 class _EditServiceState extends State<EditService> {
+  bool check = false;
+  int num = 0;
+  File? imageFile;
+  List<Service>? lister;
+  // Create a new Dio instance
 
-  int num=0;
-  XFile ? image;
-  late PickedFile _imageFile;
   final ImagePicker picker = ImagePicker();
+  final API _api = API();
+  var categories = <Category>[];
+  var subcategories = <SubCategory>[];
+  Category? selectedCategory;
+  SubCategory? selectedSubCategory;
+  final TextEditingController discountController = TextEditingController(),
+      priceController = TextEditingController(),
+      titleController = TextEditingController(),
+      descriptionController = TextEditingController(),
+      durationController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    getapidata();
+  }
+
+  bool isNumeric(String str) {
+    // A simple function to check if a string represents a valid number
+    if (str.isEmpty) {
+      return false;
+    }
+    return double.tryParse(str) != null;
+  }
+
+  Future<void> getapidata() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String authToken = prefs.getString('token') ?? '';
+    // print(authToken);
+    String url = "${_api.baseURL}service/${widget.id}";
+
+    var result = await https.get(Uri.parse(url), headers: {'Token': authToken});
+    print(result.body);
+    lister = await jsonDecode(result.body)
+        .map((item) => Service.fromJson(item))
+        .toList()
+        .cast<Service>();
+        print('lister');
+    print(lister?[0].serviceImage);
+
+    setState(() {
+      _fetchCategories();
+    });
+  }
+
+  Future<void> updateService() async {
+    print("hello");
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String authToken = prefs.getString('token') ?? '';
+
+      dio.FormData formData = dio.FormData();
+
+      // if (imageFile != null) {
+      //   formData.files.add(MapEntry(
+      //     'profile_picture',
+      //     await dio.MultipartFile.fromFile(imageFile!.path),
+      //   ));
+      // }
+
+      Map<String, String> fields = {
+        'category_id': selectedCategory!.categoryId.toString(),
+        'service_description': descriptionController.text,
+        'service_title': selectedSubCategory!.subCategoryName.toString(),
+        'service_price': priceController.text,
+        'duration': durationController.text,
+      };
+
+      fields.forEach((key, value) {
+        if (value.isNotEmpty) {
+          formData.fields.add(MapEntry(key, value));
+        }
+      });
+      if (imageFile != null)
+        formData.files.add(MapEntry(
+          'image',
+          await dio.MultipartFile.fromFile(imageFile!.path),
+        ));
+
+      dio.Dio dioInstance = dio.Dio();
+      dioInstance.options.headers['token'] = authToken;
+
+      dio.Response response = await dioInstance.put(
+        'http://192.168.0.104:3000/service/5',
+        data: formData,
+      );
+
+      if (response.statusCode == 200) {
+        print('Profile updated successfully');
+        successPopUp(context, 'Profile Updated',
+            'Your profile has been successfully updated', 'success.json', () {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const Services()));
+        });
+      } else {
+        print('Error updating profile: ${response.data}');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  Future<void> _fetchCategories() async {
+    List<Category>? fetchedCategories =
+        await _api.getcategory(); // Add a null check here
+    setState(() {
+      categories = fetchedCategories;
+      print("heloooooooooooo22222222222");
+
+      print(lister![0].serviceImage);
+      print(lister![0].serviceDescription);
+
+      for (int i = 0; i < categories.length; i++) {
+        if (categories[i].categoryId == lister![0].categoryId) {
+          selectedCategory = categories[i];
+        }
+      }
+      print("heloooooooooooo");
+    });
+  }
+
+  Future<void> _fetchSubcategories(int categoryId) async {
+    List<SubCategory>? fetchedSubcategories = await _api
+        .getsubcategory(categoryId.toString()); // Add a null check here
+    setState(() {
+      subcategories = fetchedSubcategories;
+      for (int j = 0; j < 300; j++) {
+        for (int i = 0; i < subcategories.length; i++) {
+          if (subcategories[i].subCategoryName == lister![0].serviceTitle) {
+            selectedSubCategory = subcategories[i];
+          }
+        }
+      }
+      print(selectedSubCategory!.subCategoryName);
+      print("11111111111111111111111111111");
+    });
+  }
+
   Future getImage(ImageSource media) async {
     var img = await picker.pickImage(source: media);
 
     setState(() {
-      print("Helooooooooooooooooooooooooooooooooooooo");
-      image = img;
+      if (img != null) {
+        print(img.path);
+        // If running in Flutter environment, use XFile
+        imageFile = File(img.path);
+      }
     });
   }
-  String dropdownvalueRole = 'Saloon';
-  bool check = false;
+
   @override
   Widget build(BuildContext context) {
-
-    String dropdownvalueRole1 = 'Hair Cutting';
-    String dropdownvalueRole2 = 'Sofa Cleaning';
-    String dropdownvalueRole3 = 'Car Repairing';
-
-    var categories = ["Saloon", "Cleaning","Repairing"];
-    var Saloon = ["Hair Cutting","Head Massage"];
-    var Cleaning = ["House Cleaning", "Sofa Cleaning"];
-    var Repairing = ["Car Repairing", "Furniture Repairing"];
-
-    int a=3;
-    int b=2;
-    List subcategories =
-    [
-      ["Hair Cutting","Head Massage"],
-      [ "House Cleaning", " Sofa Cleaning"],
-      [ "Car Repairing", "Furniture Repairing"],
-    ];
-
-
-    Widget category () {
-      return
-//       DropdownButton(
-//
-//         value: categories[0],
-//         items: categories.map((category) { return DropdownMenuItem(
-// alignment: Alignment.centerLeft,
-//           child: Text(category),value: category,);}).toList(), onChanged: (category){null;});
-
-
-        DropdownButtonFormField<String>(
-          isExpanded: true,
-          hint: Text(
-            "Buyer/Seller",
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: 15,
-            ),
-          ),
-          value: dropdownvalueRole,
-          icon: Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.black54,
-          ),
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.black,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            filled: true,
-            fillColor: Colors.white,
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-            // border: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide.none,
-            // ),
-            // focusedBorder: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide(
-            //     color: Theme.of(context).primaryColor,
-            //     width: 2.0,
-            //   ),
-            // ),
-          ),
-          items: categories.map((String item) {
-            return DropdownMenuItem<String>(
-              alignment: Alignment.topLeft,
-              value: item,
-              child: Text(
-                item,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                ),
+    Widget categoryDropdown() {
+      return DropdownButtonFormField<Category>(
+        isExpanded: true,
+        // hint: const Text(
+        //   "Saloon",
+        //   style: TextStyle(
+        //     color: Colors.black54,
+        //     fontSize: 15,
+        //   ),
+        // ),
+        value: selectedCategory,
+        icon: const Icon(
+          Icons.keyboard_arrow_down,
+          color: Colors.black54,
+        ),
+        style: const TextStyle(
+          fontSize: 15,
+          color: Colors.black,
+        ),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+        ),
+        items: categories.map((category) {
+          return DropdownMenuItem<Category>(
+            alignment: Alignment.topLeft,
+            value: category,
+            child: Text(
+              category.categoryName!,
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.black,
               ),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            setState(() {
-              dropdownvalueRole = newValue!;
-              print(dropdownvalueRole);
-              check=true;
-            });
-          },
-        );
+            ),
+          );
+        }).toList(),
+        onChanged: (Category? newValue) {
+          setState(() {
+            selectedCategory = newValue;
+            // Fetch subcategories based on selected category
+            if (newValue != null) {
+              setState(() {
+                _fetchSubcategories(newValue.categoryId!);
+                check = true;
+              });
+            }
+          });
+        },
+      );
     }
 
-    Widget categoryL (String val) {
+    Widget subCategoryDropdown() {
+      var subcategoriesForSelectedCategory = subcategories
+          .where((subcategory) =>
+              subcategory.parentId == selectedCategory?.categoryId)
+          .toList();
 
-      for(int i=0;i<categories.length;i++)
-      {
-
-        if(val==categories[i])
-        {
-          num=i;
-          print(val);
-          print(num);
-          print(dropdownvalueRole);
-        }
-      }
-      return
-//       DropdownButton(
-//
-//         value: categories[0],
-//         items: categories.map((category) { return DropdownMenuItem(
-// alignment: Alignment.centerLeft,
-//           child: Text(category),value: category,);}).toList(), onChanged: (category){null;});
-
-        num==0?
-        DropdownButtonFormField<String>(
-          isExpanded: true,
-          hint: Text(
-            "Buyer/Seller",
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: 15,
-            ),
-          ),
-          value: dropdownvalueRole1,
-          icon: Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.black54,
-          ),
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.black,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            filled: true,
-            fillColor: Colors.white,
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-            // border: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide.none,
-            // ),
-            // focusedBorder: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide(
-            //     color: Theme.of(context).primaryColor,
-            //     width: 2.0,
-            //   ),
-            // ),
-          ),
-
-          items: Saloon.map((String item) {
-            return DropdownMenuItem<String>(
-              alignment: Alignment.topLeft,
-              value: item,
-              child: Text(
-                item,
+      return DropdownButtonFormField<SubCategory>(
+        isExpanded: true,
+        hint: lister != null
+            ? Text(
+                lister![0].serviceTitle.toString(),
                 style: TextStyle(
+                  color: Colors.black87,
                   fontSize: 15,
-                  color: Colors.black,
                 ),
+              )
+            : null,
+        value: selectedSubCategory,
+        icon: const Icon(
+          Icons.keyboard_arrow_down,
+          color: Colors.black54,
+        ),
+        style: const TextStyle(
+          fontSize: 15,
+          color: Colors.black,
+        ),
+        decoration: const InputDecoration(
+          border: InputBorder.none,
+          filled: true,
+          fillColor: Colors.white,
+          contentPadding: EdgeInsets.symmetric(vertical: 12, horizontal: 15),
+        ),
+        items: subcategoriesForSelectedCategory.map((subcategory) {
+          return DropdownMenuItem<SubCategory>(
+            alignment: Alignment.topLeft,
+            value: subcategory,
+            child: Text(
+              subcategory.subCategoryName!,
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.black,
               ),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            setState(() {
-              dropdownvalueRole1 = newValue!;
-
-            });
-          },
-        ): num == 1 ?
-        DropdownButtonFormField<String>(
-          isExpanded: true,
-          hint: Text(
-            "Buyer/Seller",
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: 15,
             ),
-          ),
-          value: dropdownvalueRole2,
-          icon: Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.black54,
-          ),
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.black,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            filled: true,
-            fillColor: Colors.white,
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-            // border: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide.none,
-            // ),
-            // focusedBorder: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide(
-            //     color: Theme.of(context).primaryColor,
-            //     width: 2.0,
-            //   ),
-            // ),
-          ),
-
-          items: Cleaning.map((String item) {
-            return DropdownMenuItem<String>(
-              alignment: Alignment.topLeft,
-              value: item,
-              child: Text(
-                item,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                ),
-              ),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            setState(() {
-              dropdownvalueRole2 = newValue!;
-              check=true;
-            });
-          },
-        ):
-        DropdownButtonFormField<String>(
-          isExpanded: true,
-          hint: Text(
-            "Buyer/Seller",
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: 15,
-            ),
-          ),
-          value: dropdownvalueRole3,
-          icon: Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.black54,
-          ),
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.black,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            filled: true,
-            fillColor: Colors.white,
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-            // border: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide.none,
-            // ),
-            // focusedBorder: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide(
-            //     color: Theme.of(context).primaryColor,
-            //     width: 2.0,
-            //   ),
-            // ),
-          ),
-
-          items: Repairing.map((String item) {
-            return DropdownMenuItem<String>(
-              alignment: Alignment.topLeft,
-              value: item,
-              child: Text(
-                item,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black,
-                ),
-              ),
-            );
-          }).toList(),
-          onChanged: (String? newValue) {
-            setState(() {
-              dropdownvalueRole3 = newValue!;
-              check=true;
-            });
-          },
-        );
-    }
-    Widget categoryLL () {
-
-      return
-
-
-        DropdownButtonFormField<String>(
-          isExpanded: true,
-          enableFeedback: false,
-          hint: Text(
-            "Buyer/Seller",
-            style: TextStyle(
-              color: Colors.black26,
-              fontSize: 15,
-            ),
-          ),
-          value: dropdownvalueRole1,
-          icon: Icon(
-            Icons.keyboard_arrow_down,
-            color: Colors.black26,
-          ),
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.black26,
-          ),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            filled: true,
-            fillColor: Colors.white,
-            contentPadding:
-            const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
-            // border: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide.none,
-            // ),
-            // focusedBorder: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   borderSide: BorderSide(
-            //     color: Theme.of(context).primaryColor,
-            //     width: 2.0,
-            //   ),
-            // ),
-          ),
-          items: Saloon.map((String item) {
-            return DropdownMenuItem<String>(
-              alignment: Alignment.topLeft,
-              value: item,
-              child: Text(
-                item,
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.black26,
-                ),
-              ),
-            );
-          }).toList(),
-          onChanged: null,
-        );
+          );
+        }).toList(),
+        onChanged: (SubCategory? newValue) {
+          setState(() {
+            selectedSubCategory = newValue;
+          });
+        },
+      );
     }
 
     var h = MediaQuery.of(context).size.height;
     var w = MediaQuery.of(context).size.width;
-
-    var height;
 
     var fonte = 14.0;
     var fontSize = 18.0;
@@ -398,454 +308,284 @@ class _EditServiceState extends State<EditService> {
       fontSize = 22.0;
       fonte = 18.0;
     }
-    void takePhoto(ImageSource source) async{
-      final pickedFile = await picker.pickImage(source: source);
-      setState(() {
-        _imageFile = pickedFile as PickedFile;
-      });
 
-    }
-    Widget bottomsheet() {
+    Widget bottomSheet() {
       return Container(
-        // decoration: BoxDecoration(border:Border.all(color: Colors.red,width: 3),borderRadius: BorderRadius.circular(8)),
         height: h * 0.2,
         width: w * 0.7,
-        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
-            Text("Choose Profile Photo",style: GoogleFonts.dmSans(
+            Text(
+              "Choose Profile Photo",
+              style: GoogleFonts.dmSans(
                 fontSize: fontSize,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF323B60),
-                decoration: TextDecoration.none),),
-            SizedBox(
-              height: h * 0.01,
+                color: const Color(0xFF323B60),
+                decoration: TextDecoration.none,
+              ),
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-
-              children: [Column(
-                children: [
-                  IconButton(onPressed: (){getImage(ImageSource.camera);}, icon: Icon(Icons.camera_alt),tooltip: "Camera",iconSize: h*0.04+w*0.04,),Text("Camera")
-                ],
-              ),Column(
-                children: [
-                  IconButton(onPressed: (){getImage(ImageSource.gallery);}, icon: Icon(Icons.image),tooltip: "Gallery",iconSize: h*0.04+w*0.04,),
-                  Text("Gallery")],
-              )],
+            SizedBox(height: h * 0.01),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  onPressed: () => getImage(ImageSource.camera),
+                  icon: const Icon(Icons.camera_alt),
+                  tooltip: "Camera",
+                  iconSize: h * 0.04 + w * 0.04,
+                ),
+                IconButton(
+                  onPressed: () => getImage(ImageSource.gallery),
+                  icon: const Icon(Icons.image),
+                  tooltip: "Gallery",
+                  iconSize: h * 0.04 + w * 0.04,
+                ),
+              ],
             )
           ],
         ),
       );
     }
 
-
-
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        elevation: 2,
-        title: ClipRRect(
-          borderRadius: BorderRadius.circular(8),
-          child: Image.asset(
-            'assets/niche.png',
-            width: 123,
-            height: 54,
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              print('Notification button pressed');
-            },
-            icon: const Icon(
-              Icons.notifications_active_rounded,
-              color: Color.fromARGB(255, 12, 3, 30),
-              size: 30,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          automaticallyImplyLeading: false,
+          elevation: 2,
+          title: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.grey[100],
+            ),
+            child: Image.asset(
+              'assets/niche.png',
+              width: 123,
+              height: 54,
+              fit: BoxFit.fitWidth,
             ),
           ),
-          IconButton(
-            onPressed: () {
-              print('Messages button pressed');
-            },
-            icon: const Icon(
-              Icons.message_rounded,
-              color: Color.fromARGB(255, 12, 3, 30),
-              size: 30,
-            ),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.keyboard_backspace,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Services()));
-                    },
-                    tooltip:
-                    MaterialLocalizations.of(context).openAppDrawerTooltip,
-                  ),
-                  Text(
-                    "Edit Service",
-                    style: GoogleFonts.dmSans(
-                        fontSize: fontSize,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF323B60),
-                        decoration: TextDecoration.none),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.done,
-                      color: Colors.black,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Services()));
-                    },
-                    tooltip:
-                    MaterialLocalizations.of(context).openAppDrawerTooltip,
-                  ),
-                ],
+          actions: [
+            IconButton(
+              onPressed: () {
+                print('Notification button pressed');
+              },
+              icon: const Icon(
+                Icons.notifications_active_rounded,
+                color: Color.fromARGB(255, 12, 3, 30),
+                size: 30,
               ),
             ),
-            Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 10),
-                child: image != null ?
-
-                CircleAvatar(
-                    radius: h * 0.05 + w * 0.05,
-                    //backgroundColor: Colors.blue,
-
-
-
-
-                    child: CircleAvatar(
-                        radius: h * 0.045 + w * 0.045,
-                        // backgroundColor: Colors.red,
-                        backgroundImage: FileImage( File(image!.path),),
-                        child: Align(
-                          alignment: Alignment.bottomRight,
-                          child: CircleAvatar(
-                            radius: h * 0.018 + w * 0.018,
-                            backgroundColor: Colors.white,
-                            child: CircleAvatar(
-                                radius: h * 0.015 + w * 0.015,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.linked_camera_outlined,
-                                    color: Colors.white,
-                                    weight: 100,
-                                  ),
-                                  onPressed: () {showModalBottomSheet(backgroundColor:Color(0xFFCEB290),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),context: context, builder: ((builder)=> bottomsheet()));},
-                                )),
-                          ),
-                        ))):
-
-                 CircleAvatar(
-            radius: h * 0.045 + w * 0.045,
-                // backgroundColor: Colors.red,
-                backgroundImage: NetworkImage("https://img.freepik.com/free-photo/young-bearded-man-hairdresser-salon_1163-2019.jpg"),
-                child: Align(
-                  alignment: Alignment.bottomRight,
-                  child: CircleAvatar(
-                    radius: h * 0.018 + w * 0.018,
-                    backgroundColor: Colors.white,
-                    child: CircleAvatar(
-                        radius: h * 0.015 + w * 0.015,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.linked_camera_outlined,
-                            color: Colors.white,
-                            weight: 100,
-                          ),
-                          onPressed: () {showModalBottomSheet(backgroundColor:Color(0xFFCEB290),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),context: context, builder: ((builder)=> bottomsheet()));},
-                        )),
-                  ),
-                )))
-            ,
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4F709C), width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                      padding: EdgeInsets.only(right: 3, top: 5, left: 15),
-                      child: category()
-                    // TextField(
-                    //     decoration: InputDecoration(
-                    //         border: InputBorder.none,
-                    //        // hintText: "Category",
-                    //         hintStyle: GoogleFonts.workSans(
-                    //             fontSize: fonte,
-                    //             fontWeight: FontWeight.w500,
-                    //             color: Color(0xFF4F709C),
-                    //             decoration: TextDecoration.none),
-                    //         suffixIcon: Icon(
-                    //           GestureDetector(onTap: )
-                    //
-                    //
-                    //           Icons.arrow_drop_down_sharp,
-                    //           size: 35,
-                    //           color: Color(0xFF4F709C),
-                    //         ))),
-                  ),
-                ),
-                Positioned(
-                  left: 35,
-                  top: 12,
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'Category',
-                      style: GoogleFonts.workSans(
-                          fontSize: fonte,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF4F709C),
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: check ? Border.all(color: Color(0xFF4F709C), width: 1):Border.all(color: Colors.black38, width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                      padding: EdgeInsets.only(right: 3, top: 5, left: 15),
-                      child:  categoryL(dropdownvalueRole)
-
-
-                  ),
-                ),
-                Positioned(
-                  left: 35,
-                  top: 12,
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'Sub-Category',
-                      style: GoogleFonts.workSans(
-                          fontSize: fonte,
-                          fontWeight: FontWeight.w500,
-                          color:  check ? Color(0xFF4F709C): Colors.black38,
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4F709C), width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 3, top: 3, left: 25),
-                    child: TextField(
-                        textAlign: TextAlign.start,
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "49.99",
-                            alignLabelWithHint: true,
-                            hintStyle: GoogleFonts.workSans(
-                                fontSize: fonte,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF4F709C),
-                                decoration: TextDecoration.none),
-                            suffixIcon: Icon(
-                              Icons.monetization_on_outlined,
-                              size: 25,
-                              color: Color(0xFF4F709C),
-                            ))),
-                  ),
-                ),
-                Positioned(
-                  left: 35,
-                  top: 12,
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'Price',
-                      style: GoogleFonts.workSans(
-                          fontSize: fonte,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF4F709C),
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4F709C), width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 3, top: 3, left: 25),
-                    child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "25",
-                            hintStyle: GoogleFonts.workSans(
-                                fontSize: fonte,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF4F709C),
-                                decoration: TextDecoration.none),
-                            suffixIcon: Icon(
-                              Icons.percent_outlined,
-                              size: 25,
-                              color: Color(0xFF4F709C),
-                            ))),
-                  ),
-                ),
-                Positioned(
-                  left: 35,
-                  top: 12,
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'Discount',
-                      style: GoogleFonts.workSans(
-                          fontSize: fonte,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF4F709C),
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Stack(
-              children: <Widget>[
-                Container(
-                  width: w * 0.9,
-                  height: h * 0.07,
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  padding: EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xFF4F709C), width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 3, top: 3, left: 25),
-                    child: TextField(
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "1 hour",
-                            hintStyle: GoogleFonts.workSans(
-                                fontSize: fonte,
-                                fontWeight: FontWeight.w500,
-                                color: Color(0xFF4F709C),
-                                decoration: TextDecoration.none),
-                            suffixIcon: Icon(
-                              Icons.access_time,
-                              size: 25,
-                              color: Color(0xFF4F709C),
-                            ))),
-                  ),
-                ),
-                Positioned(
-                  left: 35,
-                  top: 12,
-                  child: Container(
-                    padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
-                    color: Colors.white,
-                    child: Text(
-                      'Duration',
-                      style: GoogleFonts.workSans(
-                          fontSize: fonte,
-                          fontWeight: FontWeight.w500,
-                          color: Color(0xFF4F709C),
-                          decoration: TextDecoration.none),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 20, bottom: 5),
-              child: Container(
-                width: Get.width * 1,
-                height: Get.height * 0.06,
-                decoration: BoxDecoration(
-                  // border: Border.all(width: 3.0),R
-                  borderRadius: BorderRadius.circular(8),
-                  color: const Color(0xFF4F709C),
-                ),
-                child: TextButton(
-                  onPressed: () { Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Services()));},
-                  child: Text(
-                    "Confirm",
-                    style: GoogleFonts.dmSans(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.none),
-                  ),
-                ),
+            IconButton(
+              onPressed: () {
+                print('Messages button pressed');
+              },
+              icon: const Icon(
+                Icons.message_rounded,
+                color: Color.fromARGB(255, 12, 3, 30),
+                size: 30,
               ),
-            )
+            ),
           ],
         ),
-      ),
-    );
+        body: lister != null
+            ? SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.keyboard_backspace,
+                                color: Colors.black),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                          Text(
+                            "Edit Service",
+                            style: GoogleFonts.dmSans(
+                              fontSize: fontSize,
+                              fontWeight: FontWeight.w600,
+                              color: const Color(0xFF323B60),
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.done, color: Colors.black),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 10),
+                      child: GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            backgroundColor: const Color(0xFFCEB290),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            context: context,
+                            builder: ((builder) => bottomSheet()),
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: h * 0.05 + w * 0.05,
+                          backgroundImage: imageFile != null
+                              ? FileImage(File(imageFile!.path))
+                              : NetworkImage(_api.baseURL +
+                                      lister![0].serviceImage.toString())
+                                  as ImageProvider,
+                          child: imageFile != null
+                              ? Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: CircleAvatar(
+                                    radius: h * 0.018 + w * 0.018,
+                                    child: CircleAvatar(
+                                      radius: h * 0.015 + w * 0.015,
+                                      child: const Icon(
+                                        Icons.image,
+                                        color: Colors.white,
+                                      ),
+                                      backgroundColor: Colors.transparent,
+                                    ),
+                                  ),
+                                )
+                              : const Icon(
+                                  Icons.camera_alt_outlined,
+                                  size: 50,
+                                ),
+                        ),
+                      ),
+                    ),
+                    StackedDropdown(
+                      width: w * 0.9,
+                      height: h * 0.07,
+                      showSubCategory:
+                          true, // Set to true if you want to show sub-category dropdown
+                      title: 'Category',
+                      dropdown: categoryDropdown(),
+                      fontSize:
+                          fonte, // Replace with your actual category dropdown widget
+                    ),
+                    StackedDropdown(
+                      width: w * 0.9,
+                      height: h * 0.07,
+                      showSubCategory:
+                          check, // Set to true when you want to show sub-category dropdown
+                      title: 'Sub-Category',
+                      dropdown:
+                          subCategoryDropdown(), // Replace with your actual sub-category dropdown widget
+                      fontSize:
+                          fonte, // Replace with your actual category dropdown widget
+                    ),
+                    StackedContainer(
+                      // text: 'Title',
+                      labelText: lister![0].serviceTitle.toString(),
+                      suffixIcon: Icons.title,
+                      width: w * 0.9,
+                      height: h * 0.07,
+                      fontSize: fonte,
+                      controller: titleController,
+                    ),
+                    StackedContainer(
+                      // text: 'Description',
+                      labelText: lister![0].serviceDescription.toString(),
+                      //hint: "h"
+                      suffixIcon: Icons.description,
+                      width: w * 0.9,
+                      height: h * 0.2,
+                      fontSize: fonte,
+                      controller: descriptionController,
+                      allowResizing: true,
+                    ),
+                    StackedContainer(
+                      // text: 'Price',
+                      labelText: lister![0].servicePrice.toString(),
+                      suffixIcon: Icons.monetization_on_outlined,
+                      width: w * 0.9,
+                      height: h * 0.07,
+                      fontSize: fonte,
+                      controller: priceController,
+                    ),
+                    StackedContainer(
+                      // text: 'Discount',
+                      labelText: 'Discount',
+                      suffixIcon: Icons.percent_outlined,
+                      width: w * 0.9,
+                      height: h * 0.07,
+                      fontSize: fonte,
+                      controller: discountController,
+                    ),
+                    StackedContainer(
+                      // text: 'Duration',
+                      labelText: lister![0].duration.toString(),
+                      suffixIcon: Icons.date_range,
+                      width: w * 0.9,
+                      height: h * 0.07,
+                      fontSize: fonte,
+                      controller: durationController,
+                      textInputType: TextInputType
+                          .number, // Add this line to set the keyboard type
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 20),
+                      child: Container(
+                        width: Get.width,
+                        height: Get.height * 0.06,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xFF4F709C),
+                        ),
+                        child: TextButton(
+                          onPressed: () async {
+                            if (selectedCategory == null ||
+                                selectedSubCategory == null ||
+                                imageFile == null ||
+                                titleController.text.isEmpty ||
+                                descriptionController.text.isEmpty ||
+                                priceController.text.isEmpty ||
+                                discountController.text.isEmpty ||
+                                durationController.text.isEmpty) {
+                              showSnackBar(context,
+                                  'Please fill in all required fields.');
+                              return; // Exit the function if validation fails
+                            }
+
+                            // Validate data types
+                            if (!isNumeric(priceController.text)) {
+                              showSnackBar(
+                                  context, 'Price must be a valid number.');
+                              return;
+                            }
+
+                            if (!isNumeric(durationController.text)) {
+                              showSnackBar(
+                                  context, 'Duration must be a valid number.');
+                              return;
+                            }
+                            await updateService();
+                          },
+                          child: Text(
+                            "Confirm",
+                            style: GoogleFonts.dmSans(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Container());
   }
 }

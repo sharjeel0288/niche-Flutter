@@ -3,10 +3,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:expandable/expandable.dart';
+import 'package:login_niche2/API/model.dart';
 
 class ExpandableWidget extends StatefulWidget {
   final String mainCategory;
-  final List<Subcategory> subcategories;
+  final List<SubCategory> subcategories;
 
   const ExpandableWidget({
     Key? key,
@@ -60,22 +61,27 @@ class _ExpandableWidgetState extends State<ExpandableWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: widget.subcategories
-                    .map((subcategory) => Padding(
-                          padding:
-                              const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 10),
-                          child: GestureDetector(
-                            onTap: subcategory.onTap,
-                            child: Text(
-                              subcategory.title,
-                              style: const TextStyle(
-                                fontFamily: 'DM Sans',
-                                color: Color.fromARGB(255, 63, 72, 111),
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                              ),
+                    .map(
+                      (subcategory) => Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(15, 10, 0, 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            print(subcategory.subCategoryId);
+                          },
+                          child: Text(
+                            subcategory.subCategoryName
+                                .toString(), // Use the 'title' attribute here
+                            style: const TextStyle(
+                              fontFamily: 'DM Sans',
+                              color: Color.fromARGB(255, 63, 72, 111),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
-                        ))
+                        ),
+                      ),
+                    )
                     .toList(),
               ),
               theme: const ExpandableThemeData(
@@ -91,11 +97,4 @@ class _ExpandableWidgetState extends State<ExpandableWidget> {
       ),
     );
   }
-}
-
-class Subcategory {
-  final String title;
-  final VoidCallback onTap;
-
-  Subcategory({required this.title, required this.onTap});
 }

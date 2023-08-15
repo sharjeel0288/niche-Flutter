@@ -41,6 +41,7 @@ class Service {
     serviceDescription = json['service_description'];
     servicePrice = json['service_price'];
     duration = json['duration'];
+    serviceImage = json['service_image'];
     // Update the serviceImage property to handle image loading
   }
 
@@ -53,10 +54,12 @@ class Service {
     data['service_description'] = this.serviceDescription;
     data['service_price'] = this.servicePrice;
     data['duration'] = this.duration;
-    data['image'] = this.serviceImage; // Assuming serviceImage is in base64
+    data['service_image'] =
+        this.serviceImage; // Assuming serviceImage is in base64
     return data;
   }
 }
+
 
 class SubCategory {
   int? subCategoryId;
@@ -164,3 +167,4 @@ class User {
     );
   }
 }
+
