@@ -225,7 +225,7 @@ class _SellerHomeState extends State<SellerHome> {
                         height: MediaQuery.of(context).size.height * 0.02,
                       ),
                       ServiceCard(
-                        serviceName: 'Hair Cutting',
+                        serviceName: 'Hair Cutting aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
                         serviceRatings: 4.5,
                         serviceTime: '1 hour',
                         servicePrice: 49.99,

@@ -55,6 +55,12 @@ class _AddServiceState extends State<AddService> {
     return double.tryParse(str) != null;
   }
 
+  void clearSelectedSubCategory() {
+    setState(() {
+      selectedSubCategory = null;
+    });
+  }
+
   Future<void> postServiceData() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -108,6 +114,7 @@ class _AddServiceState extends State<AddService> {
   }
 
   Future<void> _fetchSubcategories(int categoryId) async {
+    subcategories.clear(); // Clear the list before adding new items
     List<SubCategory>? fetchedSubcategories = await _api
         .getsubcategory(categoryId.toString()); // Add a null check here
     setState(() {
@@ -171,10 +178,9 @@ class _AddServiceState extends State<AddService> {
             selectedCategory = newValue;
             // Fetch subcategories based on selected category
             if (newValue != null) {
-              setState(() {
-                _fetchSubcategories(newValue.categoryId!);
-                check = true;
-              });
+              _fetchSubcategories(newValue.categoryId!);
+              clearSelectedSubCategory(); // Clear the selected sub-category
+              check = true;
             }
           });
         },
@@ -214,7 +220,7 @@ class _AddServiceState extends State<AddService> {
         items: subcategoriesForSelectedCategory.map((subcategory) {
           return DropdownMenuItem<SubCategory>(
             alignment: Alignment.topLeft,
-            value: subcategory,
+            value: subcategory, // Make sure this is unique
             child: Text(
               subcategory.subCategoryName!,
               style: const TextStyle(

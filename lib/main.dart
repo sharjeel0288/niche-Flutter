@@ -3,6 +3,13 @@ import 'package:login_niche2/SELLER/sellerServices/add_service.dart';
 import 'package:login_niche2/SELLER/sellerServices/edit_service.dart';
 import 'package:login_niche2/SplashScreen/Splash_Screen.dart';
 import 'package:login_niche2/about/screen/aboutScreen.dart';
+import 'package:login_niche2/ahmed%20files/ServiceFeature/getfeatured.dart';
+import 'package:login_niche2/ahmed%20files/buyerJobPost/buyerjobpost.dart';
+import 'package:login_niche2/ahmed%20files/buyerJobPostForm/buyerjobpostform.dart';
+import 'package:login_niche2/ahmed%20files/credits/credits.dart';
+import 'package:login_niche2/ahmed%20files/proposalReceived/proposalsrecieved.dart';
+import 'package:login_niche2/ahmed%20files/proposals/proposal.dart';
+import 'package:login_niche2/ahmed%20files/sellerOrder/sellerorder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:login_niche2/BUYER/buyerNavbar/navbar_buyer.dart';
 import 'package:login_niche2/SELLER/sellerNavbar/seller_navbar.dart';
@@ -77,9 +84,9 @@ class _MyAppState extends State<MyApp> {
       );
     } else {
       // Your navigation logic remains the same
-      return const MaterialApp(
+      return  MaterialApp(
         home: Scaffold(
-          body: NavbarBuyer(),
+          body: SellerorderWidget(),
           // body: route == 'buyer'
           //     ? const NavbarBuyer()
           //     : route == 'seller'
@@ -99,4 +106,3 @@ class _MyAppState extends State<MyApp> {
     }
   }
 }
-

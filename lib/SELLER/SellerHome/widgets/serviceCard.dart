@@ -182,8 +182,8 @@ class _ServiceCardState extends State<ServiceCard>
                         top: 10,
                         right: 10,
                         child: Container(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
@@ -215,26 +215,32 @@ class _ServiceCardState extends State<ServiceCard>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.serviceName,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.serviceName,
+                                maxLines:
+                                    2, // Set maxLines to wrap text to two lines
+                                overflow: TextOverflow
+                                    .ellipsis, // Show ellipsis if text overflows
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              widget.serviceTime,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey,
+                              const SizedBox(height: 8),
+                              Text(
+                                widget.serviceTime,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         Text(
                           '\$${widget.servicePrice.toStringAsFixed(2)}',

@@ -121,7 +121,7 @@ class API {
   Future<List<SubCategory>> getsubcategory(String parentid) async {
     try {
       print(parentid);
-      String url = "http://192.168.0.105:3000/category/$parentid";
+      String url = "${baseURL}category/$parentid";
       var result = await http.get(Uri.parse(url));
       print(result.body);
       final subcategory = (jsonDecode(result.body) as List)
@@ -136,7 +136,7 @@ class API {
 
   Future<List<Category>> getcategory() async {
     try {
-      String url = "http://192.168.0.105:3000/category";
+      String url = "${baseURL}category";
       var result = await http.get(Uri.parse(url));
       print(result.body);
       final category = (jsonDecode(result.body) as List)
